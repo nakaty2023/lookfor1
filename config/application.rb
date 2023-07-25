@@ -12,6 +12,12 @@ module Lookfor1
     config.load_defaults 7.0
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
+    config.generators do |g|
+      g.test_framework :rspec,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #
