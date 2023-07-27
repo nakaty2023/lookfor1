@@ -3,7 +3,7 @@ namespace :import do
   task prefectures: :environment do
     require 'csv'
 
-    path = Rails.root.join('lib', 'data', 'pref.csv')
+    path = Rails.root.join('lib/data/pref.csv')
     CSV.foreach(path, headers: true) do |row|
       Prefecture.create!(row.to_hash)
     end
@@ -16,7 +16,7 @@ namespace :import do
   task municipalities: :environment do
     require 'csv'
 
-    path = Rails.root.join('lib', 'data', 'municipalities.csv')
+    path = Rails.root.join('lib/data/municipalities.csv')
     CSV.foreach(path, headers: true) do |row|
       Municipality.create!(row.to_hash)
     end

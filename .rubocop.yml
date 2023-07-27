@@ -19,8 +19,13 @@ AllCops:
     - "lib/tasks/auto_annotate_models.rake"
     - "config/environments/*"
     - "config/puma.rb"
+    - "config/initializers/devise.rb"
 
 ### ルールのカスタマイズ
+
+# 設定が厳しいので一旦全てfalseにする
+Metrics:
+  Enabled: false
 
 # クラスにコメントを残さなくても良い
 Style/Documentation:

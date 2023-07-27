@@ -8,26 +8,26 @@ def shop_fetcher
   options.add_argument('--disable-gpu') # 一部のOS/システムでは必要な場合がある
 
   # ブラウザのインスタンスを開始 (オプションを使用)
-  driver = Selenium::WebDriver.for :chrome, options: options
+  driver = Selenium::WebDriver.for(:chrome, options:)
 
   # 外部サイトにアクセス
   driver.navigate.to 'https://1kuji.com/shop_lists'
 
   # 商品を選択
-  product_name = "一番くじ 呪術廻戦 懐玉・玉折 ～壱～"
+  product_name = '一番くじ 呪術廻戦 懐玉・玉折 ～壱～'
   product_dropdown = driver.find_element(:id, 'product_select')
   product_option = Selenium::WebDriver::Support::Select.new(product_dropdown)
   product_option.select_by(:text, product_name)
 
   # 都道府県を選択
-  pref_name = "沖縄県"
+  pref_name = '沖縄県'
   pref_dropdown = driver.find_element(:id, 'pref_select')
   pref_option = Selenium::WebDriver::Support::Select.new(pref_dropdown)
   pref_option.select_by(:text, pref_name)
 
   # 市町村を選択
   sleep 3 # ページの読み込みを待つための適当な待機時間
-  city_name = "那覇市(45)"
+  city_name = '那覇市(45)'
   city_dropdown = driver.find_element(:id, 'city_select')
   city_option = Selenium::WebDriver::Support::Select.new(city_dropdown)
   city_option.select_by(:text, city_name)
@@ -47,7 +47,7 @@ def shop_fetcher
   ul_element.css('li').each do |li|
     name = li.at_css('h5').text
     address = li.at_css('p.address').text.strip
-    shops << { name: name, address: address }
+    shops << { name:, address: }
   end
 
   # スクレイピングで取得した店舗情報を保存
