@@ -53,6 +53,9 @@ gem 'whenever', require: false
 gem "selenium-webdriver"
 gem "webdrivers"
 gem "devise"
+gem 'bootstrap'
+gem 'jquery-rails'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
