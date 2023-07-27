@@ -42,13 +42,20 @@ def shop_fetcher
   document = Nokogiri::HTML(page_source)
   ul_element = document.at_css('ul#shop_list_update')
 
-  # 例: 特定のクラス名を持つ要素のテキストを取得
-  results = []
+  # 店舗名と店舗住所を取得
+  shops = []
   ul_element.css('li').each do |li|
     name = li.at_css('h5').text
     address = li.at_css('p.address').text.strip
-    results << { name: name, address: address }
+    shops << { name: name, address: address }
   end
+
+  # スクレイピングで取得した店舗情報を保存
+  shops.each do |shop|
+    Shop.find_or_create_by!(name: shop[:name], address: shop[:address])
+  end
+  # 公式サイトに掲載されなくなった店舗は削除
+  Shop.where.not(name: shops.pluck(:name)).delete_all
 
   # ブラウザを閉じる
   driver.quit
