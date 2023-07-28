@@ -2,12 +2,15 @@
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
-      <h1>
-        <%= @user.name %>
-      </h1>
-      <p>
-        <%= @user.email %>
-      </p>
+      name: <%= @user.name %><br>
+      email: <%= @user.email %><br>
+      age: <%= @user.age %><br>
+      gender: <%= @user.gender %><br>
+      <%= link_to 'ユーザー一覧', users_path %><br>
+      <% if @user == current_user %>
+        <%= link_to 'ユーザー編集', edit_user_registration_path %><br>
+        <%= link_to "削除", users_path, method: :delete, data: { turbo_method: :delete } %><br>
+      <% end %>
     </section>
   </aside>
 </div>

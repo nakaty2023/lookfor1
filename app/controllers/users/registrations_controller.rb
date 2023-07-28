@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    convert_gender_to_integer
+    super
+  end
 
   # GET /resource/edit
   # def edit
@@ -37,6 +38,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
+
+  private
+
+  def convert_gender_to_integer
+    params[:user][:gender] = params[:user][:gender].to_i if params[:user][:gender].present?
+  end
 
   # protected
 
