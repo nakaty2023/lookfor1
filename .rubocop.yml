@@ -39,4 +39,9 @@ Style/ClassAndModuleChildren:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+# before_actionなどのフィルタ内で指定されているアクションが、実際にそのコントローラクラス内で定義されているかチェックしない
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/users/registrations_controller.rb'
+
 
