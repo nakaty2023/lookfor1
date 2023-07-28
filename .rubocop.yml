@@ -1,5 +1,3 @@
-# inherit_from: .rubocop_todo.yml
-
 require:
   - rubocop-performance
   - rubocop-rails
@@ -21,8 +19,13 @@ AllCops:
     - "lib/tasks/auto_annotate_models.rake"
     - "config/environments/*"
     - "config/puma.rb"
+    - "config/initializers/devise.rb"
 
 ### ルールのカスタマイズ
+
+# 設定が厳しいので一旦全てfalseにする
+Metrics:
+  Enabled: false
 
 # クラスにコメントを残さなくても良い
 Style/Documentation:
@@ -35,5 +38,10 @@ Style/ClassAndModuleChildren:
 # 文字列のfreeze（Ruby3からは自動でfreezeされるので要らない）
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+# before_actionなどのフィルタ内で指定されているアクションが、実際にそのコントローラクラス内で定義されているかチェックしない
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/users/registrations_controller.rb'
 
 
