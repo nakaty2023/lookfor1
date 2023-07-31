@@ -1,4 +1,8 @@
 class ShopsController < ApplicationController
+  def index
+    @shops = Shop.all
+  end
+
   def show
     @shop = Shop.find(params[:id])
   end
@@ -14,6 +18,11 @@ class ShopsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    Shop.find(params[:id]).destroy
+    redirect_to shops_url, status: :see_other
   end
 
   private

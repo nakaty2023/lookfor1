@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root 'users#index'
+  root 'shops#index'
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
-  resources :shops, only: %i[new create show]
+  resources :shops, only: %i[new create show destroy index]
   resources :users, only: %i[show index]
 end
