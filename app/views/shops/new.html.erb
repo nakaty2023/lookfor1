@@ -1,0 +1,11 @@
+<div>
+  <%= form_with(model: @shop) do |f| %>
+    <div>
+      <%= f.label :name %>
+      <%= f.text_field :name %><br>
+      <%= f.label :address %>
+      <%= f.text_field :address %>
+    </div>
+    <%= f.submit "保存" %>
+  <% end %>
+</div>

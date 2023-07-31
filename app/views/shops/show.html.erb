@@ -1,0 +1,14 @@
+<div id="map" style="width: 600px; height: 400px;"></div>
+<script>
+  document.addEventListener('turbo:load', function() {
+      var mapElement = document.getElementById('map');
+      if (mapElement) {
+        var map = L.map('map').setView([<%= @shop.lat %>, <%= @shop.lon %>], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        L.marker([<%= @shop.lat %>, <%= @shop.lon %>]).addTo(map)
+          .bindPopup('<%= @shop.address %>').openPopup();
+      }
+    });
+</script>
