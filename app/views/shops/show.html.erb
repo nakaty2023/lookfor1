@@ -1,14 +1,24 @@
-<div id="map" style="width: 600px; height: 400px;"></div>
+<%= @shop.name %><br>
+<%= @shop.address %><br>
+取扱商品：<br>
+<% @shop.items.each do |item| %>
+  <%= item.name %><br>
+<% end %>
+
+<div id="shop-detail-map" style="width: 600px; height: 400px;"></div>
 <script>
   document.addEventListener('turbo:load', function() {
-      var mapElement = document.getElementById('map');
-      if (mapElement) {
-        var map = L.map('map').setView([<%= @shop.lat %>, <%= @shop.lon %>], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-        L.marker([<%= @shop.lat %>, <%= @shop.lon %>]).addTo(map)
-          .bindPopup('<%= @shop.address %>').openPopup();
+    var mapElement = document.getElementById('shop-detail-map');
+    if (mapElement) {
+      if (window.shopMap) {
+        window.shopMap.remove();
       }
-    });
+      window.shopMap = L.map('shop-detail-map').setView([<%= @shop.lat %>, <%= @shop.lon %>], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(window.shopMap);
+      L.marker([<%= @shop.lat %>, <%= @shop.lon %>]).addTo(window.shopMap)
+        .bindPopup('<%= @shop.name %><br><%= @shop.address %>').openPopup();
+    }
+  });
 </script>
