@@ -51,7 +51,6 @@ gem "bootsnap", require: false
 gem 'nokogiri'
 gem 'whenever', require: false
 gem "selenium-webdriver"
-gem "webdrivers"
 gem "devise"
 gem 'bootstrap'
 gem 'jquery-rails'

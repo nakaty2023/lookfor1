@@ -27,7 +27,9 @@
         }).addTo(map);
 
         window.shopsData.forEach(shop => {
-          L.marker([shop.lat, shop.lon]).addTo(map).bindPopup(`${shop.name}<br>${shop.address}`);
+          L.marker([shop.lat, shop.lon]).addTo(map).bindPopup(
+            `${shop.name}<br>${shop.address}`
+            );
         });
       }
   });
