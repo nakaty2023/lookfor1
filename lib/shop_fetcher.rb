@@ -9,7 +9,9 @@ def shop_fetcher
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--window-size=1280x800')
-  ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+  ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ' \
+       'AppleWebKit/537.36 (KHTML, like Gecko) ' \
+       'Chrome/115.0.0.0 Safari/537.36'
   options.add_argument("--user-agent=#{ua}")
 
   # ブラウザのインスタンスを開始 (オプションを使用)
@@ -24,11 +26,11 @@ def shop_fetcher
   # 商品を選択
   product_dropdown = driver.find_element(:id, 'product_select')
   product_element = Selenium::WebDriver::Support::Select.new(product_dropdown)
-  product_options = product_element.options.select { |option| option.attribute('value') != 'null' }
+  product_options = product_element.options.reject { |option| option.attribute('value') == 'null' }
 
-  selected_product_options = product_options[0..1] #テストのためのコード
+  selected_product_options = product_options[0..1] # テストのためのコード
 
-  selected_product_options.each do |product_option| #テストのための修正
+  selected_product_options.each do |product_option| # テストのための修正
     product_name = product_option.text.sub('一番くじ ', '')
     @product = Item.find_by(name: product_name)
     product_option.click
@@ -39,9 +41,9 @@ def shop_fetcher
     pref_element = Selenium::WebDriver::Support::Select.new(pref_dropdown)
     pref_options = pref_element.options.select { |option| option.attribute('value') }
 
-    selected_pref_options = pref_options[4..5] #テストのためのコード
+    selected_pref_options = pref_options[4..5] # テストのためのコード
 
-    selected_pref_options.each do |pref_option| #テストのための修正
+    selected_pref_options.each do |pref_option| # テストのための修正
       pref_option.click
       sleep 1
 
@@ -49,9 +51,9 @@ def shop_fetcher
       sleep 1 # ページの読み込みを待つための適当な待機時間
       city_dropdown = driver.find_element(:id, 'city_select')
       city_element = Selenium::WebDriver::Support::Select.new(city_dropdown)
-      city_options = city_element.options.select { |option| option.attribute('value') != 'null' }
+      city_options = city_element.options.reject { |option| option.attribute('value') == 'null' }
 
-      selected_city_options = city_options[0..1] #テストのためのコード
+      selected_city_options = city_options[0..1] # テストのためのコード
 
       selected_city_options.each do |city_option|
         city_option.click
@@ -71,11 +73,12 @@ def shop_fetcher
         ul_element.css('li').each do |li|
           name = li.at_css('h5').text
           address = li.at_css('p.address').text.strip
-          google_map_link = driver.find_element(:css, 'a.arrow[href*="https://www.google.com/maps/search/?api=1&query="]').attribute("href")
+          google_map_link = driver.find_element(:css, 'a.arrow[href*="https://www.google.com/maps/search/?api=1&query="]').attribute('href')
           match = /query=([\d\.-]+),([\d\.-]+)/.match(google_map_link)
-          lat, lon = match[1], match[2]
+          lat = match[1]
+          lon = match[2]
           unless @shops.any? { |shop| shop[:name] == name && shop[:address] == address }
-            @shops << { name: name, address: address, lat: lat, lon: lon }
+            @shops << { name:, address:, lat:, lon: }
           end
           @shop_items << { shop_name: name, item_id: @product.id }
         end

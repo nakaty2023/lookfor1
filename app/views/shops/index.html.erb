@@ -14,7 +14,10 @@
 
 <div id="map" style="width: 100%; height: 500px;"></div>
 <script>
-  window.shopsData = <%= raw @shops.to_json(only: [:name, :address, :lat, :lon]) %>;
+  window.shopsData = <%= raw @shops.to_json(
+    only: [:name, :address, :lat, :lon],
+    include: { items: { only: [:name] } }
+  ) %>;
 
   document.addEventListener('turbo:load', function() {
       var mapElement = document.getElementById('map');
@@ -27,9 +30,13 @@
         }).addTo(map);
 
         window.shopsData.forEach(shop => {
+          let itemsList = '<strong>取扱商品</strong><br>';
+          shop.items.forEach(item => {
+            itemsList += `・${item.name}<br>`;
+          });
           L.marker([shop.lat, shop.lon]).addTo(map).bindPopup(
-            `${shop.name}<br>${shop.address}`
-            );
+            `${shop.name}<br>${shop.address}<br>${itemsList}`
+          );
         });
       }
   });
