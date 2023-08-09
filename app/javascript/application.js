@@ -2,6 +2,7 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require leaflet
 import "@hotwired/turbo-rails"
 import "controllers"
-import "bootstrap";
+import "bootstrap"
