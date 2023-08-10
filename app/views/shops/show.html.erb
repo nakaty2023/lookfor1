@@ -1,24 +1,45 @@
-<%= @shop.name %><br>
-<%= @shop.address %><br>
-取扱商品：<br>
-<% @shop.items.each do |item| %>
-  <%= item.name %><br>
-<% end %>
+<div class="row">
+  <div class="col">
+    <%= @shop.name %><br>
+    <%= @shop.address %><br>
+    取扱商品：<br>
+    <% @shop.items.each do |item| %>
+      <%= item.name %><br>
+    <% end %>
 
-<div id="shop-detail-map" style="width: 600px; height: 400px;"></div>
-<script>
-  document.addEventListener('turbo:load', function() {
-    var mapElement = document.getElementById('shop-detail-map');
-    if (mapElement) {
-      if (window.shopMap) {
-        window.shopMap.remove();
-      }
-      window.shopMap = L.map('shop-detail-map').setView([<%= @shop.lat %>, <%= @shop.lon %>], 15);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      }).addTo(window.shopMap);
-      L.marker([<%= @shop.lat %>, <%= @shop.lon %>]).addTo(window.shopMap)
-        .bindPopup('<%= @shop.name %><br><%= @shop.address %>').openPopup();
-    }
-  });
-</script>
+    <div id="shop-detail-map" style="width: 100%; height: 400px;"></div>
+    <script>
+      document.addEventListener('turbo:load', function() {
+        var mapElement = document.getElementById('shop-detail-map');
+        if (mapElement) {
+          if (window.shopMap) {
+            window.shopMap.remove();
+          }
+          window.shopMap = L.map('shop-detail-map').setView([<%= @shop.lat %>, <%= @shop.lon %>], 15);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(window.shopMap);
+          L.marker([<%= @shop.lat %>, <%= @shop.lon %>]).addTo(window.shopMap)
+            .bindPopup('<%= @shop.name %><br><%= @shop.address %>').openPopup();
+        }
+      });
+    </script>
+
+    <%= form_with(model: @shoppost) do |f| %>
+      <div class="field">
+        <%= f.hidden_field :shop_id, value: @shop.id %>
+        <%= f.text_area :content, placeholder: "店舗に関するコメントを入力してください" %>
+      </div>
+      <%= f.submit "投稿", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="col">
+    <% @shopposts.each do |shoppost| %>
+      ユーザー名：<%= shoppost.user ? shoppost.user.name : "ゲストユーザー" %><br>
+      内容：<%= shoppost.content %><br>
+      -----------------------------------<br>
+    <% end %>
+  </div>
+</div>
+
+
