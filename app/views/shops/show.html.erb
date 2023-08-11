@@ -37,6 +37,9 @@
     <% @shopposts.each do |shoppost| %>
       ユーザー名：<%= shoppost.user ? shoppost.user.name : "ゲストユーザー" %><br>
       内容：<%= shoppost.content %><br>
+      <% if current_user&.== shoppost.user %>
+        <%= link_to "削除", shoppost, data: { "turbo-method": :delete, turbo_confirm: "削除して問題ないですか？" } %><br>
+      <% end %>
       -----------------------------------<br>
     <% end %>
   </div>
