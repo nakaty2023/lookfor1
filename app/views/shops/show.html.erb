@@ -7,7 +7,7 @@
       <%= item.name %><br>
     <% end %>
 
-    <div id="shop-detail-map" style="width: 100%; height: 400px;"></div>
+    <div id="shop-detail-map" style="width: 100%; height: 400px;" class="mb-5"></div>
     <script>
       document.addEventListener('turbo:load', function() {
         var mapElement = document.getElementById('shop-detail-map');
@@ -24,21 +24,29 @@
         }
       });
     </script>
-
-    <%= form_with(model: @shoppost) do |f| %>
-      <div class="field">
-        <%= f.hidden_field :shop_id, value: @shop.id %>
-        <%= f.text_area :content, placeholder: "店舗に関するコメントを入力してください" %>
-      </div>
-      <%= f.submit "投稿", class: "btn btn-primary" %>
-    <% end %>
+    <div>
+      <%= form_with(model: @shoppost) do |f| %>
+        <%= render "shared/error_messages", resource: @shoppost %>
+        <div class="field">
+          <%= f.hidden_field :shop_id, value: @shop.id %>
+          <%= f.text_area :content, placeholder: "店舗に関するコメントを入力してください" %><br>
+          <%= f.file_field :images, multiple: true, include_hidden: false, accept: "image/png,image/jpeg,image/jpg,image/gif" %>
+        </div>
+        <%= f.submit "投稿", class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
   <div class="col">
     <% @shopposts.each do |shoppost| %>
       ユーザー名：<%= shoppost.user ? shoppost.user.name : "ゲストユーザー" %><br>
       内容：<%= shoppost.content %><br>
+      <% if shoppost.images.attached? %>
+        <% shoppost.images.each do |image| %>
+          <%= image_tag image, alt: "Shoppost image", class: "shoppost-image" %>
+        <% end %>
+      <% end %>
       <% if current_user&.== shoppost.user %>
-        <%= link_to "削除", shoppost, data: { "turbo-method": :delete, turbo_confirm: "削除して問題ないですか？" } %><br>
+        <%= link_to "削除", shoppost, data: { turbo_method: :delete, turbo_confirm: "削除して問題ないですか？" } %><br>
       <% end %>
       -----------------------------------<br>
     <% end %>

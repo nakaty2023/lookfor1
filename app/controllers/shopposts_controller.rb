@@ -13,12 +13,14 @@ class ShoppostsController < ApplicationController
       @shop = @shoppost.shop
       redirect_to @shop
     else
-      @shop = Shop.find(params[:id])
+      @shop = Shop.find(@shoppost.shop_id)
+      @shopposts = @shop.shopposts.includes(:user, { images_attachments: :blob })
       render 'shops/show', status: :unprocessable_entity
     end
   end
 
   def destroy
+    @shoppost = Shoppost.find(params[:id])
     @shop = @shoppost.shop
     @shoppost.destroy
     flash[:notice] = '投稿を削除しました'
@@ -28,7 +30,7 @@ class ShoppostsController < ApplicationController
   private
 
   def shoppost_params
-    params.require(:shoppost).permit(:content, :shop_id)
+    params.require(:shoppost).permit(:content, :shop_id, images: [])
   end
 
   def correct_user
