@@ -9,7 +9,7 @@ class ShoppostsController < ApplicationController
                   Shoppost.new(shoppost_params)
                 end
     if @shoppost.save
-      flash[:notice] = '投稿が完了しました'
+      flash[:notice] = t('.success')
       @shop = @shoppost.shop
       redirect_to @shop
     else
@@ -23,7 +23,7 @@ class ShoppostsController < ApplicationController
     @shoppost = Shoppost.find(params[:id])
     @shop = @shoppost.shop
     @shoppost.destroy
-    flash[:notice] = '投稿を削除しました'
+    flash[:notice] = t('.success')
     redirect_to @shop, status: :see_other
   end
 

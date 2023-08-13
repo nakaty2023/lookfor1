@@ -52,6 +52,7 @@ gem 'nokogiri'
 gem 'whenever', require: false
 gem "selenium-webdriver"
 gem "devise"
+gem 'devise-i18n'
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'leaflet-rails'

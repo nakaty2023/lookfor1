@@ -4,7 +4,7 @@ document.addEventListener("turbo:load", function() {
     let image_upload = document.querySelector('#shoppost_images');
     const size_in_megabytes = image_upload.files[0].size/1024/1024;
     if (size_in_megabytes > 5) {
-      alert("Maximum file size is 5MB. Please choose a smaller file.");
+      alert("画像のサイズは5MB以下である必要があります。");
       image_upload.value = "";
     }
   });
