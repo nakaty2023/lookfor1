@@ -1,7 +1,9 @@
 class Shoppost < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :shop
-  has_many_attached :images
+  has_many_attached :images do |attachable|
+    attachable.variant :display, resize_to_limit: [400, 400]
+  end
   default_scope -> { order(created_at: :desc) }
   validates :content, presence: true
   validates :images, content_type: { in: %w[image/jpeg image/gif image/png image/jpg],

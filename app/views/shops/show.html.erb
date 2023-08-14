@@ -42,7 +42,7 @@
       内容：<%= shoppost.content %><br>
       <% if shoppost.images.attached? %>
         <% shoppost.images.each do |image| %>
-          <%= image_tag image, alt: "Shoppost image", class: "shoppost-image" %>
+          <%= image_tag image.variant(:display), alt: "Shoppost image", class: "shoppost-image" %><br>
         <% end %>
       <% end %>
       <% if current_user&.== shoppost.user %>

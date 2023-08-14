@@ -2,10 +2,9 @@ def shop_fetcher
   require 'selenium-webdriver'
   require 'nokogiri'
 
-  # Chromeのヘッドレスモードのオプションを設定
   options = Selenium::WebDriver::Chrome::Options.new
   # options.add_argument('--headless')
-  options.add_argument('--disable-gpu') # 一部のOS/システムでは必要な場合がある
+  options.add_argument('--disable-gpu')
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--window-size=1280x800')
