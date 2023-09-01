@@ -27,7 +27,7 @@ def shop_fetcher
   product_element = Selenium::WebDriver::Support::Select.new(product_dropdown)
   product_options = product_element.options.reject { |option| option.attribute('value') == 'null' }
 
-  selected_product_options = product_options[0..1] # テストのためのコード
+  selected_product_options = product_options[0..4] # テストのためのコード
 
   selected_product_options.each do |product_option| # テストのための修正
     product_name = product_option.text.sub('一番くじ ', '')
@@ -40,7 +40,7 @@ def shop_fetcher
     pref_element = Selenium::WebDriver::Support::Select.new(pref_dropdown)
     pref_options = pref_element.options.select { |option| option.attribute('value') }
 
-    selected_pref_options = pref_options[4..5] # テストのためのコード
+    selected_pref_options = pref_options[44..45] # テストのためのコード
 
     selected_pref_options.each do |pref_option| # テストのための修正
       pref_option.click
@@ -105,11 +105,8 @@ def shop_fetcher
   old_shopitems = current_shopitems - @scraped_shopitems
 
   # 削除対象データ等を取得できているかどうか確認
-  # puts "old_shopitems"
   # puts old_shopitems
-  # puts "current_shopitems"
   # puts current_shopitems
-  # puts "@scraped_shopitems"
   # puts @scraped_shopitems
 
   old_shopitems.each do |old_shopitem|

@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_08_12_014512) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -69,8 +72,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_014512) do
 
   create_table "shopposts", force: :cascade do |t|
     t.text "content"
-    t.integer "user_id"
-    t.integer "shop_id", null: false
+    t.bigint "user_id"
+    t.bigint "shop_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shop_id", "created_at"], name: "index_shopposts_on_shop_id_and_created_at"
