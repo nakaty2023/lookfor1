@@ -1,4 +1,5 @@
 class Shop < ApplicationRecord
+  has_many :shopposts, dependent: :destroy
   has_many :shopitems, dependent: :destroy
   has_many :items, through: :shopitems
   validates :name, presence: true

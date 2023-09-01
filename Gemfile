@@ -9,9 +9,6 @@ gem "rails", "7.0.4"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
@@ -46,17 +43,20 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 gem 'nokogiri'
 gem 'whenever', require: false
 gem "selenium-webdriver"
 gem "devise"
+gem 'devise-i18n'
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'leaflet-rails'
 gem 'leaflet-markercluster-rails'
 gem 'geocoder'
+gem 'active_storage_validations'
+gem 'pg'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -85,8 +85,4 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-end
-
-group :production do
-  gem "pg", "1.3.5"
 end

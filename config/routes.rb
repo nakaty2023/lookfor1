@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   }
   resources :shops, only: %i[new create show destroy index]
   resources :users, only: %i[show index]
+  resources :shopposts, only: %i[create destroy]
 end

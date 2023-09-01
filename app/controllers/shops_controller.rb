@@ -5,6 +5,8 @@ class ShopsController < ApplicationController
 
   def show
     @shop = Shop.find(params[:id])
+    @shoppost = Shoppost.new
+    @shopposts = @shop.shopposts.includes(:user, { images_attachments: :blob })
   end
 
   def new
