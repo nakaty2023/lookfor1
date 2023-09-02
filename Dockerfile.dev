@@ -1,0 +1,17 @@
+FROM ruby:3.1.4-buster
+
+RUN apt update -qq && \
+    apt install -y postgresql-client nodejs
+RUN mkdir /lookfor1
+WORKDIR /lookfor1
+COPY Gemfile /lookfor1/Gemfile
+COPY Gemfile.lock /lookfor1/Gemfile.lock
+RUN bundle config set --global force_ruby_platform true
+RUN bundle install
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
+
+CMD ["rails", "server", "-b", "0.0.0.0"]
