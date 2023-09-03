@@ -3,7 +3,8 @@ name: "CI/CD"
 on:
   push:
   pull_request:
-    branches: [ $default-branch ]
+    branches:
+      - main
 
 jobs:
   rspec:
@@ -24,7 +25,7 @@ jobs:
           --health-retries 5
     env:
       RAILS_ENV: test
-      # DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      DATABASE_URL: "postgres://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@localhost:5432/${{ secrets.DB_DATABASE }}"
 
     steps:
       - name: Checkout code
