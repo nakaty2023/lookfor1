@@ -7,7 +7,6 @@ on:
 
 jobs:
   rspec:
-    # name: Tset
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -15,9 +14,9 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: <%= ENV['DB_DATABASE'] %>
-          POSTGRES_USER: <%= ENV['DB_USERNAME'] %>
-          POSTGRES_PASSWORD: <%= ENV['DB_PASSWORD'] %>
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
