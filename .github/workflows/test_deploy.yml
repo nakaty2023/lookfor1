@@ -35,31 +35,33 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1.4
-          #bundler-cache: true
+          bundler-cache: true
 
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Run bundle install
-        run: |
-          bundle config --local path vendor/bundle
-          bundle config --local without production
-          bundle install
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Node dependencies
+        run: npm install
 
       - name: Create and migrate database
         run: |
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
-      # - name: Set up database schema
-      #   run: bin/rails db:schema:load
-
       - name: Run rspec
         run: bundle exec rspec
 
-  lint:
+  rubocop:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
