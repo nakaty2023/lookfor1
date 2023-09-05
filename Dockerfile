@@ -5,16 +5,12 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/
 RUN curl -sL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get update -qq && \
     apt-get install -y build-essential libpq-dev nodejs postgresql-client-15
-RUN mkdir /lookfor1
-WORKDIR /lookfor1
-COPY Gemfile /lookfor1/Gemfile
-COPY Gemfile.lock /lookfor1/Gemfile.lock
+
+ENV APP_ROOT /var/www
+RUN mkdir $APP_ROOT
+WORKDIR $APP_ROOT
+COPY Gemfile /var/www/Gemfile
+COPY Gemfile.lock /var/www/Gemfile.lock
+
 RUN bundle config set --global force_ruby_platform true
 RUN bundle install
-
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
