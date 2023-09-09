@@ -1,0 +1,89 @@
+name: "CD"
+
+on:
+  push:
+
+jobs:
+  deploy:
+    name: Deploy to Amazon ECS
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Download task definition
+      run: |
+        aws ecs describe-task-definition --task-definition lookfor1_task --query taskDefinition > task-definition.json
+
+    - name: Build, tag, and push Rails image to Amazon ECR
+      id: build-rails-image
+      env:
+        DOCKER_BUILDKIT: 1
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: lookfor1_rails
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build \
+          -f prd/Dockerfile \
+          --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    - name: Build, tag, and push Nginx image to Amazon ECR
+      id: build-nginx-image
+      env:
+        DOCKER_BUILDKIT: 1
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: lookfor1_nginx
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build \
+          -f prd/nginx/Dockerfile \
+          --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    - name: Fill in the new image ID in the Amazon ECS task definition (Rails)
+      id: task-def-with-rails
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: lookfor1_rails
+        image: ${{ steps.build-rails-image.outputs.image }}
+
+    - name: Fill in the new image ID in the Amazon ECS task definition (Nginx)
+      id: task-def-with-nginx
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: lookfor1_nginx
+        image: ${{ steps.build-nginx-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def-with-nginx.outputs.task-definition }}
+        service: lookfor1-service
+        cluster: lookfor1-rails
+        wait-for-service-stability: true
