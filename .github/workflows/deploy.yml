@@ -37,6 +37,7 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build \
+          --platform linux/arm64 \
           -f prd/Dockerfile \
           --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
           --build-arg BUILDKIT_INLINE_CACHE=1 \
@@ -55,6 +56,7 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build \
+          --platform linux/arm64 \
           -f prd/nginx/Dockerfile \
           --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
           --build-arg BUILDKIT_INLINE_CACHE=1 \
