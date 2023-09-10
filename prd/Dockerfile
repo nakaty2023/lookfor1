@@ -23,4 +23,4 @@ ENTRYPOINT ["entrypoint.sh"]
 VOLUME /var/www/public
 VOLUME /var/www/tmp/
 
-CMD bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+CMD bash -c "bundle exec puma -C config/puma.rb"
