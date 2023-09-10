@@ -6,7 +6,7 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get update -qq \
     && apt-get install -y build-essential libpq-dev nodejs postgresql-client-15
 
-RUN mkdir /var/www
+RUN mkdir -p /var/www/tmp/pids
 WORKDIR /var/www
 COPY Gemfile /var/www/Gemfile
 COPY Gemfile.lock /var/www/Gemfile.lock
@@ -23,4 +23,4 @@ ENTRYPOINT ["entrypoint.sh"]
 VOLUME /var/www/public
 VOLUME /var/www/tmp/
 
-CMD bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+CMD bash -c "bundle exec puma -C config/puma.rb"
