@@ -7,7 +7,7 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential libpq-dev nodejs postgresql-client-15
 
 ENV APP_ROOT /var/www
-RUN mkdir -p $APP_ROOT/tmp/pids
+RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 COPY Gemfile /var/www/Gemfile
 COPY Gemfile.lock /var/www/Gemfile.lock
