@@ -29,6 +29,7 @@ config/master.key
 # TODO Comment out these rules if environment variables can be committed
 .env*
 !.env.sample
+!.env.test.sample
 
 ## Environment normalization:
 /.bundle
