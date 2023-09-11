@@ -1,152 +1,152 @@
 [
 	{
 		"shopitem": {
-			"shop_id": 18,
-			"item_id": 96
+			"shop_id": 1,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 19,
-			"item_id": 96
+			"shop_id": 2,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 20,
-			"item_id": 96
+			"shop_id": 3,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 21,
-			"item_id": 96
+			"shop_id": 4,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 22,
-			"item_id": 96
+			"shop_id": 5,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 23,
-			"item_id": 96
+			"shop_id": 6,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 24,
-			"item_id": 96
+			"shop_id": 7,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 25,
-			"item_id": 96
+			"shop_id": 8,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 26,
-			"item_id": 96
+			"shop_id": 9,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 27,
-			"item_id": 96
+			"shop_id": 10,
+			"item_id": 1
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 18,
-			"item_id": 99
+			"shop_id": 1,
+			"item_id": 3
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 20,
-			"item_id": 99
+			"shop_id": 3,
+			"item_id": 3
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 24,
-			"item_id": 99
+			"shop_id": 7,
+			"item_id": 3
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 23,
-			"item_id": 99
+			"shop_id": 6,
+			"item_id": 3
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 21,
-			"item_id": 99
+			"shop_id": 4,
+			"item_id": 3
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 26,
-			"item_id": 99
+			"shop_id": 9,
+			"item_id": 3
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 18,
-			"item_id": 98
+			"shop_id": 1,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 19,
-			"item_id": 98
+			"shop_id": 2,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 23,
-			"item_id": 98
+			"shop_id": 6,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 21,
-			"item_id": 98
+			"shop_id": 4,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 25,
-			"item_id": 98
+			"shop_id": 8,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 26,
-			"item_id": 98
+			"shop_id": 9,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 27,
-			"item_id": 98
+			"shop_id": 10,
+			"item_id": 2
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 18,
-			"item_id": 100
+			"shop_id": 1,
+			"item_id": 4
 		}
 	},
 	{
 		"shopitem": {
-			"shop_id": 26,
-			"item_id": 100
+			"shop_id": 9,
+			"item_id": 4
 		}
 	}
 ]

@@ -17,15 +17,6 @@ shops_array.each do |shop|
   Shop.create!(shop['shop'])
 end
 
-# Shopitems
-#  Shopitem.where(shop_id: 18..27).to_json(only: [:shop_id, :item_id], root: true)
-#  上記実行結果 >> db/seeds/shopitems.json
-shopitems_file = File.read(Rails.root.join('db', 'seeds', 'shopitems.json'))
-shopitems_array = JSON.parse(shopitems_file)
-shopitems_array.each do |shopitem|
-  Shopitem.create!(shopitem['shopitem'])
-end
-
 # Items(id:96〜100)
 #  Item.where(id: 96..100).to_json(only: [:name, :url], root: true)
 #  上記実行結果 >> db/seeds/items.json
@@ -33,6 +24,15 @@ items_file = File.read(Rails.root.join('db', 'seeds', 'items.json'))
 items_array = JSON.parse(shops_file)
 items_array.each do |item|
   Item.create!(item['item'])
+end
+
+# Shopitems
+#  Shopitem.where(shop_id: 18..27).to_json(only: [:shop_id, :item_id], root: true)
+#  上記実行結果 >> db/seeds/shopitems.json
+shopitems_file = File.read(Rails.root.join('db', 'seeds', 'shopitems.json'))
+shopitems_array = JSON.parse(shopitems_file)
+shopitems_array.each do |shopitem|
+  Shopitem.create!(shopitem['shopitem'])
 end
 
 # Shopposts
