@@ -21,7 +21,7 @@ end
 #  Item.where(id: 96..100).to_json(only: [:name, :url], root: true)
 #  上記実行結果 >> db/seeds/items.json
 items_file = File.read(Rails.root.join('db', 'seeds', 'items.json'))
-items_array = JSON.parse(shops_file)
+items_array = JSON.parse(items_file)
 items_array.each do |item|
   Item.create!(item['item'])
 end
