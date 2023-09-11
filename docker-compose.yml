@@ -46,4 +46,4 @@ services:
         volume:
           nocopy: true
     depends_on:
-      - db
+      - ${DB_HOST}
