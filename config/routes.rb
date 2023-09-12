@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   resources :shops, only: %i[new create show destroy index]
-  resources :users, only: %i[show index]
+  resources :users, only: %i[show index] do
+    member do
+      get :profile
+    end
+  end
   resources :shopposts, only: %i[create destroy]
 end
