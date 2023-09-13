@@ -114,12 +114,20 @@ aside {
   }
 }
 
-.user-edit-form-control, .user-edit-form-label  {
+/* user-forms*/
+
+.user-registrations-form-control, .user-registrations-form-label  {
   margin-bottom: 0;
 }
 
-.user-edit-wrapper {
+.user-registrations-wrapper {
   span {
     font-size: 12px;
   }
+}
+
+.required::after {
+  content: " *";
+  color: red;
+  vertical-align: middle;
 }

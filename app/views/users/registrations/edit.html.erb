@@ -1,9 +1,9 @@
-<% provide(:title, 'Edit User') %>
-<div class="user-edit-wrapper p-4">
+<% provide(:title, 'プロフィール変更') %>
+<div class="user-registrations-wrapper p-4">
   <h1 class="fs-3 fw-bold">プロフィール変更</h1>
   <div class="row">
     <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= form_with model: resource, as: resource_name, url: registration_path(resource_name), method: :put, local: true do |f| %>
         <%= render "shared/error_messages", resource: resource %>
         <div class="row mb-3">
           <div class="col-sm-4">
@@ -51,25 +51,25 @@
         </div>
         <div class="row mb-4">
           <div class="col-sm-4">
-            <%= f.label :password, class: "user-edit-form-label col-form-label" %><br>
+            <%= f.label :password, class: "user-registrations-form-label col-form-label" %><br>
             <% if @minimum_password_length %>
-              <span>※<%= @minimum_password_length %> <%= t('users.registrations.edit.characters_minimum') %></span>
+              <span>※<%= @minimum_password_length %> <%= t('users.registrations.characters_minimum') %></span>
             <% end %>
           </div>
           <div class="col-sm-8">
-            <%= f.password_field :password, autocomplete: "new-password", class: "user-edit-form-control form-control" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "user-registrations-form-control form-control" %>
             <span>※<%= t('users.registrations.edit.leave_blank_if_you_don_t_want_to_change_it') %></span>
           </div>
         </div>
         <div class="row mb-4">
           <div class="col-sm-4">
-            <%= f.label :password_confirmation, class: "user-edit-form-label col-form-label" %><br>
+            <%= f.label :password_confirmation, class: "user-registrations-form-label col-form-label" %><br>
             <% if @minimum_password_length %>
-              <span>※<%= @minimum_password_length %> <%= t('users.registrations.edit.characters_minimum') %></span>
+              <span>※<%= @minimum_password_length %> <%= t('users.registrations.characters_minimum') %></span>
             <% end %>
           </div>
           <div class="col-sm-8">
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "user-edit-form-control form-control" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "user-registrations-form-control form-control" %>
             <span>※<%= t('users.registrations.edit.leave_blank_if_you_don_t_want_to_change_it') %></span>
           </div>
         </div>
@@ -91,4 +91,3 @@
       </div>
     </div>
   </div>
-
