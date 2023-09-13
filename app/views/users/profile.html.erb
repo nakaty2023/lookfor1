@@ -4,7 +4,7 @@
   <div class="row d-flex justify-content-center">
     <div class="row d-flex justify-content-center">
       <div class="col-lg-6 col-md-8 col-sm-10 col-12 py-4">
-        <%= image_tag "sample_image.jpg", alt: "User image", class: "user-image rounded-circle me-4", width: 80, height: 80 %>
+        <%= image_tag @user.display_image, alt: "User image", class: "user-image rounded-circle me-4", width: 80, height: 80 %>
         <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-outline-primary btn-sm' %>
       </div>
     </div>

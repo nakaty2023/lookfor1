@@ -9,6 +9,7 @@
       <%= link_to 'ユーザー一覧', users_path %><br>
       <% if @user == current_user %>
         <%= link_to 'ユーザー編集', edit_user_registration_path %><br>
+        <%= link_to "プロフィール", profile_user_path %><br>
         <%= link_to "削除", users_path, method: :delete, data: { turbo_method: :delete } %><br>
       <% end %>
     </section>
