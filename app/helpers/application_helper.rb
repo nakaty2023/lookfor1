@@ -1,10 +1,10 @@
 module ApplicationHelper
+  BASE_TITLE = 'Look For 1'
   def full_title(page_title = '')
-    base_title = 'Look For 1'
     if page_title.empty?
-      base_title
+      BASE_TITLE
     else
-      "#{page_title} | #{base_title}"
+      "#{page_title} | #{BASE_TITLE}"
     end
   end
 end
