@@ -30,13 +30,13 @@
       <li class="list-group-item d-flex justify-content-between align-items-start px-4">
         <div class="ms-2 me-auto">
           <div class="fw-bold">年齢</div>
-          <%= @user.age.present? ? @user.age : '年齢は登録されていません' %>
+          <%= @user.age.present? ? @user.age : '未登録' %>
         </div>
       </li>
       <li class="list-group-item d-flex justify-content-between align-items-start px-4">
         <div class="ms-2 me-auto">
           <div class="fw-bold">性別</div>
-          <%= @user.gender.present? ? @user.gender : '性別は登録されていません' %>
+          <%= @user.gender.present? ? @user.gender : '未登録' %>
         </div>
       </li>
     </ul>
