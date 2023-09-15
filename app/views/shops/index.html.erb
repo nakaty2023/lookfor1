@@ -1,17 +1,5 @@
 <% provide(:title, 'All Shops') %>
 <h1>All shops</h1>
-<ul class="shops">
-  <% @shops.each do |shop| %>
-    <li>
-      name: <%= link_to shop.name, shop %><br>
-      address: <%= shop.address %><br>
-      lat: <%= shop.lat %><br>
-      lon: <%= shop.lon %><br>
-      <%= link_to "削除", shop, data: { turbo_method: :delete } %><br>
-    </li>
-  <% end %>
-</ul>
-
 <div id="map" style="width: 100%; height: 500px;"></div>
 <script>
   window.shopsData = <%= raw @shops.to_json(
@@ -41,3 +29,14 @@
       }
   });
 </script>
+<ul class="shops">
+  <% @shops.each do |shop| %>
+    <li>
+      name: <%= link_to shop.name, shop %><br>
+      address: <%= shop.address %><br>
+      lat: <%= shop.lat %><br>
+      lon: <%= shop.lon %><br>
+      <%= link_to "削除", shop, data: { turbo_method: :delete } %><br>
+    </li>
+  <% end %>
+</ul>

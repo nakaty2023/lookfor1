@@ -1,0 +1,37 @@
+<div class="p-4">
+  <h1 class="fs-3 fw-bold">検索</h1>
+  <div class="row">
+    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      <%= search_form_for @q do |f| %>
+        <div class="row mb-2">
+          <div class="col-sm-3">
+              <%= f.label :name_cont, "店舗名", class: "col-form-label" %>
+          </div>
+          <div class="col-sm-9">
+            <%= f.search_field :name_cont, class: 'form-control', placeholder: '例：ローソン ○○店' %>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3">
+            <%= f.label :items_name_cont, "商品名", class: "col-form-label" %><br>
+          </div>
+          <div class="col-sm-9">
+            <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3">
+            <%= f.label :address_cont, "住所", class: "col-form-label" %><br>
+          </div>
+          <div class="col-sm-9">
+            <%= f.search_field :address_cont, class: 'form-control', placeholder: '例：○○県○○市' %>
+          </div>
+        </div>
+        <%= f.hidden_field :lat, id: 'user_latitude' %>
+        <%= f.hidden_field :lon, id: 'user_longitude' %>
+        <div class="row mb-3">
+          <%= f.submit '検索', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>

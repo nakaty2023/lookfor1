@@ -6,4 +6,11 @@ class Shop < ApplicationRecord
   validates :address, presence: true
   geocoded_by :address, latitude: :lat, longitude: :lon
   after_validation :geocode
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[address name lat lon]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[items shopitems]
+  end
 end
