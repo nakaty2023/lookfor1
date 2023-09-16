@@ -1,11 +1,15 @@
 <div class="p-4">
-  <h1 class="fs-3 fw-bold">検索</h1>
+  <h1 class="fs-3 fw-bold">
+    <i class="fa-solid fa-magnifying-glass me-1" style="color: #0d6efd;"></i>検索
+  </h1>
   <div class="row">
     <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <%= search_form_for @q do |f| %>
+      <h2>店舗名・商品名・住所で検索する</h2>
+      <%= search_form_for @q, data: { turbo: false } do |f| %>
         <div class="row mb-2">
           <div class="col-sm-3">
-              <%= f.label :name_cont, "店舗名", class: "col-form-label" %>
+            <i class="fa-solid fa-shop me-1" style="color: #0d6efd"></i>
+            <%= f.label :name_cont, "店舗名", class: "col-form-label" %>
           </div>
           <div class="col-sm-9">
             <%= f.search_field :name_cont, class: 'form-control', placeholder: '例：ローソン ○○店' %>
@@ -13,7 +17,8 @@
         </div>
         <div class="row mb-2">
           <div class="col-sm-3">
-            <%= f.label :items_name_cont, "商品名", class: "col-form-label" %><br>
+            <i class="fa-solid fa-hippo me-1" style="color: #0d6efd"></i>
+            <%= f.label :items_name_cont, "商品名", class: "col-form-label" %>
           </div>
           <div class="col-sm-9">
             <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
@@ -21,17 +26,34 @@
         </div>
         <div class="row mb-2">
           <div class="col-sm-3">
-            <%= f.label :address_cont, "住所", class: "col-form-label" %><br>
+            <i class="fa-solid fa-location-dot me-1" style="color: #0d6efd"></i>
+            <%= f.label :address_cont, "住所", class: "col-form-label" %>
           </div>
           <div class="col-sm-9">
             <%= f.search_field :address_cont, class: 'form-control', placeholder: '例：○○県○○市' %>
           </div>
         </div>
-        <%= f.hidden_field :lat, id: 'user_latitude' %>
-        <%= f.hidden_field :lon, id: 'user_longitude' %>
         <div class="row mb-3">
           <%= f.submit '検索', class: "btn btn-primary" %>
         </div>
       <% end %>
+      <h2 class="mt-4">現在地で検索する</h2>
+      <%= search_form_for @q, url:search_shops_path, data: { turbo: false } do |f| %>
+        <div class="row mb-2">
+          <div class="col-sm-3">
+            <i class="fa-solid fa-hippo me-1" style="color: #0d6efd"></i>
+            <%= f.label :items_name_cont, "商品名", class: "col-form-label" %>
+          </div>
+          <div class="col-sm-9">
+            <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
+          </div>
+        </div>
+        <%= f.hidden_field :lat, id: 'user_latitude' %>
+        <%= f.hidden_field :lon, id: 'user_longitude' %>
+        <div class="row mb-3">
+          <%= f.submit '検索', class: "btn btn-primary", id: "search_button", disabled: true %>
+        </div>
+      <% end %>
     </div>
   </div>
+</div>

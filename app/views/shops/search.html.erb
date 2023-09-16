@@ -1,5 +1,6 @@
 <% provide(:title, '店舗一覧') %>
 <h1 class="fs-3 fw-bold">店舗一覧</h1>
+
 <div class="row">
   <div class="col-md-8 offset-md-2">
     <div id="map" style="width: 100%; height: 500px;"></div>
@@ -12,8 +13,10 @@
       document.addEventListener('turbo:load', function() {
         var mapElement = document.getElementById('map');
         if (mapElement) {
+          var userLatitude = <%= @user_latitude.present? ? @user_latitude : 'null' %>;
+          var userLongitude = <%= @user_longitude.present? ? @user_longitude : 'null' %>;
 
-          const initialView = [shopsData[0].lat, shopsData[0].lon];
+          const initialView = (userLatitude && userLongitude) ? [userLatitude, userLongitude] : [shopsData[0].lat, shopsData[0].lon];
           const map = L.map('map').setView(initialView, 14);
 
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,15 +24,33 @@
             attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
           }).addTo(map);
 
+          var userIcon = L.icon({
+            iconUrl: '<%= asset_path 'person-solid.svg' %>',
+            iconSize: [32, 32],
+          });
+
+          if (userLatitude && userLongitude) {
+            L.marker([userLatitude, userLongitude], {icon: userIcon}).addTo(map);
+          }
+
           window.shopsData.forEach(shop => {
             let itemsList = '<strong>取扱商品</strong><br>';
             shop.items.forEach(item => {
               itemsList += `・${item.name}<br>`;
             });
+
+            let routeLink = '';
+            if (userLatitude && userLongitude) {
+              routeLink = `<a href="https://www.google.com/maps/dir/?api=1&destination=${shop.lat},${shop.lon}" class="mb-1" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-route me-1"></i>現在地からのルート
+                          </a><br>`;
+            }
+
             L.marker([shop.lat, shop.lon]).addTo(map).bindPopup(
               `<a href="/shops/${shop.id}">${shop.name}</a><br>
               <span class="mb-1">${shop.address}</span><br>
               <span class="mb-1">${itemsList}</span><br>
+              ${routeLink}
               <a href="/shops/${shop.id}">
                 <i class="fa-regular fa-comments me-1"></i>店舗に関する投稿
               </a>`

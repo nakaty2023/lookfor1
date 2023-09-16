@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
-  resources :shops, only: %i[new create show destroy index]
+  resources :shops, only: %i[new create show destroy index] do
+    collection do
+      get :search
+    end
+  end
   resources :users, only: %i[show index] do
     member do
       get :profile
