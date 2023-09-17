@@ -18,7 +18,7 @@ class ShopsController < ApplicationController
   def show
     @shop = Shop.find(params[:id])
     @shoppost = Shoppost.new
-    @shopposts = @shop.shopposts.includes(:user, { images_attachments: :blob })
+    @shopposts = @shop.shopposts.includes(:user, { images_attachments: :blob }, user: { image_attachment: :blob })
   end
 
   def new
