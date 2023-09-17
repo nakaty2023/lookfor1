@@ -1,12 +1,32 @@
+<% provide(:title, '店舗詳細') %>
+<h1 class="fs-3 fw-bold">店舗詳細</h1>
+<hr>
 <div class="row">
-  <div class="col">
-    <%= @shop.name %><br>
-    <%= @shop.address %><br>
-    取扱商品：<br>
-    <% @shop.items.each do |item| %>
-      <%= item.name %><br>
-    <% end %>
-
+  <div class="col-md-6 py-4">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th scope="row">店舗名</th>
+          <td><%= @shop.name %></td>
+        </tr>
+        <tr>
+          <th scope="住所">住所</th>
+          <td><%= @shop.address %></td>
+        </tr>
+        <tr>
+          <th scope="row">取り扱い商品</th>
+          <td>
+            <ul>
+              <% @shop.items.each do |item| %>
+                <li class="mb-1">
+                  <%= link_to item.name, item.full_url, target: "_blank", rel: "noopener noreferrer", class: "shopitems-link" %>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <div id="shop-detail-map" style="width: 100%; height: 400px;" class="mb-5"></div>
     <script>
       document.addEventListener('turbo:load', function() {
@@ -24,33 +44,68 @@
         }
       });
     </script>
-    <div>
-      <%= form_with(model: @shoppost) do |f| %>
+    <hr>
+    <div class="row py-4 m-0">
+      <h2 class="text-center mb-4">新規投稿</h2>
+      <%= form_with model: @shoppost, data: { turbo: false } do |f| %>
         <%= render "shared/error_messages", resource: @shoppost %>
-        <div class="field">
-          <%= f.hidden_field :shop_id, value: @shop.id %>
-          <%= f.text_area :content, placeholder: "店舗に関するコメントを入力してください" %><br>
-          <%= f.file_field :images, multiple: true, include_hidden: false, accept: "image/png,image/jpeg,image/jpg,image/gif" %>
+        <div class="mb-3">
+          <%= f.hidden_field :shop_id, value: @shop.id %><br>
+          <%= f.text_area :content, placeholder: "店舗に関するコメントを入力してください", class: "form-control shoppost-textarea w-100" %>
         </div>
-        <%= f.submit "投稿", class: "btn btn-primary" %>
+        <div class="input-group mb-3">
+          <%= f.label :images, "画像", class: "input-group-text" %>
+          <%= f.file_field :images, multiple: true, include_hidden: false, accept: "image/png,image/jpeg,image/jpg,image/gif", class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.submit "投稿", class: "btn btn-primary w-100" %>
+        </div>
       <% end %>
     </div>
   </div>
-  <div class="col">
-    <% @shopposts.each do |shoppost| %>
-      ユーザー名：<%= shoppost.user ? shoppost.user.name : "ゲストユーザー" %><br>
-      内容：<%= shoppost.content %><br>
-      <% if shoppost.images.attached? %>
-        <% shoppost.images.each do |image| %>
-          <%= image_tag image.variant(:display), alt: "Shoppost image", class: "shoppost-image" %><br>
+  <div class="col-md-6 py-4">
+    <h2 class="text-center mb-4">店舗に関する投稿</h2>
+    <% if @shopposts.any? %>
+      <ol class="list-group">
+        <% @shopposts.each do |shoppost| %>
+          <li class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <% if shoppost.user %>
+              <%= image_tag shoppost.user.display_image, alt: "User image", class: "rounded-circle flex-shrink-0", width: 50, height:50  %>
+            <% else %>
+              <%= image_tag "default_avatar.jpg", alt: "User image", class: "rounded-circle flex-shrink-0", width: 50, height:50  %>
+            <% end %>
+            <div class="d-flex w-100 justify-content-between">
+              <div class="row">
+                <h5 class="mb-2">
+                  <% if shoppost.user %>
+                    <%= link_to shoppost.user.name, shoppost.user %>
+                  <% else %>
+                    ゲストユーザー
+                  <% end %>
+                </h5>
+                <p class="mb-2 opacity-75"><%= shoppost.content %></p>
+                <% if shoppost.images.attached? %>
+                  <% shoppost.images.each do |image| %>
+                    <div class="col-md-10 offset-md-1 mb-2">
+                      <%= image_tag image, alt: "Shoppost image", class: "shoppost-img rounded" %>
+                    </div>
+                  <% end %>
+                <% end %>
+                <div class="d-flex justify-content-between opacity-50">
+                  <small>
+                    投稿日時：<%= time_ago_in_words(shoppost.created_at) %>前
+                  </small>
+                  <% if current_user&.== shoppost.user %>
+                    <small>
+                      <%= link_to "削除", shoppost, data: { turbo_method: :delete, turbo_confirm: "削除して問題ないですか？" } %>
+                    </small>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </li>
         <% end %>
-      <% end %>
-      <% if current_user&.== shoppost.user %>
-        <%= link_to "削除", shoppost, data: { turbo_method: :delete, turbo_confirm: "削除して問題ないですか？" } %><br>
-      <% end %>
-      -----------------------------------<br>
+      </ol>
     <% end %>
   </div>
 </div>
-
-

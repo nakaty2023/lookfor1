@@ -58,6 +58,7 @@ gem 'geocoder'
 gem 'active_storage_validations'
 gem 'pg'
 gem "faker"
+gem 'ransack'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
