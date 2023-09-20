@@ -201,3 +201,41 @@ aside {
 .shopitems-link {
   text-decoration: none;
 }
+
+/* exchangepost */
+
+.exchangeposts-wrapper {
+  textarea {
+    min-height: 300px;
+  }
+}
+
+.exchangepost {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  .exchangepost-item {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    font-size: 13px;
+  }
+  a {
+    text-decoration: none;
+    font-size: 13px;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.exchangepost-delete-link {
+  font-size: 13px;
+}
+
+.exchangepost-img {
+  object-fit: cover;
+}
+
+.exchangepost-no-img {
+  opacity: 0.2;
+}
