@@ -203,3 +203,5 @@ ja:
   exchangeposts:
     create:
       success: '投稿が完了しました'
+    destroy:
+      success: '投稿を削除しました'
