@@ -1,0 +1,105 @@
+<% provide(:title, 'グッズ交換希望投稿詳細') %>
+<div class="text-end mt-4 pe-2">
+  <div class="exchangepost-time">更新：<%= l @exchangepost.updated_at, format: :long %></div>
+  <div class="exchangepost-time">投稿：<%= l @exchangepost.created_at, format: :long %></div>
+  <% if current_user&.== @user %>
+    <div class="exchangepost-delete-link">
+      <%= link_to @exchangepost, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
+        <i class="fas fa-trash-alt me-1"></i>投稿を削除
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-7 col-lg-8 p-4">
+    <div class="exchangepost-give mb-4">
+      <div class="row">
+        <% if @exchangepost.images.attached? %>
+          <div id="carouselControl" class="carousel slide col-sm-8 offset-sm-2 col-lg-6 offset-lg-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% @exchangepost.images.each_with_index do |image, i| %>
+                <div class="ratio ratio-1x1 carousel-item <%= "active" if i.zero? %>">
+                  <%= image_tag image, alt: "exchangepost image", class: "exchangepost-img rounded w-100 d-block" %>
+                </div>
+              <% end %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselControl" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselControl" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        <% else %>
+          <%= image_tag "no_image.jpg", alt: "exchangepost image", class: "exchangepost-no-img rounded w-100 d-block" %>
+        <% end %>
+      </div>
+      <h1 class="fs-5 text-start mb-0 fw-bold">譲りたいグッズ</h1>
+      <p><%= @exchangepost.give_item_name %></p>
+      <h2 class="fw-bold mt-4">譲りたいグッズの説明</h2>
+      <span><%= @exchangepost.give_item_description %></span>
+      <h2 class="fw-bold mt-4">希望する交換場所</h2>
+      <span><%= @exchangepost.place %></span>
+    </div>
+    <hr>
+    <div class="exchangepost-want">
+      <h1 class="fs-5 text-start mb-0 fw-bold">欲しいグッズ</h1>
+      <p><%= @exchangepost.want_item_name %></p>
+      <h2 class="fw-bold mt-4">欲しいグッズの説明</h2>
+      <span><%= safe_join(@exchangepost.want_item_description.split("\n"),tag(:br)) %></span>
+    </div>
+  </div>
+  <div class="col-md-5 col-lg-4 py-4">
+    <hr>
+    <div class="row">
+      <h2>投稿者</h2>
+      <div class="col-3 d-flex justify-content-center align-items-center">
+        <%= image_tag @user.display_image, alt: "User image", class: "rounded-circle w-100" %>
+      </div>
+      <div class="exchangepost-give-user col-9 d-flex flex-column justify-content-around">
+        <%= link_to @user.name, @user, class: "fs-6 text-wrap" %>
+        <div class="user-age-gender">
+          <span>年齢: <%= @user.age.present? ? @user.age : '未登録' %>　|　</span>
+          <span>性別: <%= @user.gender.present? ? @user.gender : '未登録' %></span>
+        </div>
+      </div>
+    </div>
+    <hr>
+<%
+=begin
+%>
+      <div class="row">
+        <%= form_with model: @coment do |f| %>
+          <%= render "shared/error_messages", resource: resource %>
+          <div class="row mb-3">
+            <div class="col-sm-4">
+              <%= f.label :email, class: "col-form-label required" %>
+            </div>
+            <div class="col-sm-8">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-sm-4">
+              <%= f.label :password, class: "user-registrations-form-label col-form-label required" %><br>
+            </div>
+            <div class="col-sm-8">
+              <%= f.password_field :password, autocomplete: "current-password", class: "user-registrations-form-control form-control" %>
+            </div>
+          </div>
+          <div class="actions row mb-3">
+            <%= f.submit t('users.sessions.new.sign_in'), class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        <div class="text-end">
+          <%= render "shared/links" %>
+          <%= link_to t('users.registrations.edit.back'), :back %>
+        </div>
+      </div>
+<%
+=end
+%>
+  </div>
+</div>

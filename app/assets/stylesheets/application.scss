@@ -239,3 +239,26 @@ aside {
 .exchangepost-no-img {
   opacity: 0.2;
 }
+
+.exchangepost-give, .exchangepost-want {
+  p {
+    font-size: 20px;
+  }
+  span {
+    font-size: 15px;
+  }
+}
+
+.exchangepost-give-user {
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.exchangepost-time {
+  font-size: 11px;
+  opacity: 0.5;
+}
