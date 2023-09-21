@@ -11,4 +11,9 @@ class UsersController < ApplicationController
   def profile
     @user = User.find(params[:id])
   end
+
+  def exchangeposts
+    @user = User.find(params[:id])
+    @exchangeposts = @user.exchangeposts.includes({ images_attachments: :blob })
+  end
 end

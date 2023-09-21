@@ -1,0 +1,67 @@
+<% exchangeposts.each_with_index do |exchangepost, i| %>
+  <div class="list-group-item py-3">
+    <div class="row">
+      <div class="col-md-8 d-flex">
+        <div class="me-3">
+          <%= image_tag exchangepost.user.display_image, alt: "User image", class: "rounded-circle flex-shrink-0", width: 50, height:50  %>
+        </div>
+        <div class="exchangepost w-100">
+          <div class="mb-2">
+            <%= link_to "投稿者：#{exchangepost.user.name}", exchangepost.user, class: "fs-6 text-wrap" %>
+          </div>
+          <div>
+            <span class="badge bg-primary rounded-pill exchangepost-item">譲りたい</span><br>
+            <span class="fs-5 text-wrap"><%= exchangepost.give_item_name %></span>
+          </div>
+          <small class="text-secondary"><%= exchangepost.give_item_description %></small>
+          <div class="mt-2">
+            <span class="badge bg-primary rounded-pill exchangepost-item">欲しい</span><br>
+            <span class="fs-5 text-wrap"><%= exchangepost.want_item_name %></span>
+          </div>
+          <small class="text-secondary"><%= exchangepost.want_item_description %></small><br>
+          <span class="badge bg-primary rounded-pill exchangepost-item mt-3">希望する交換場所</span><br>
+          <span><%= exchangepost.place %></span>
+          <div class="text-end mt-2 mb-3">
+            <%= link_to exchangepost do %>
+              <i class="fa-solid fa-angle-right me-1"></i>投稿の詳細を見る
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex flex-column justify-content-around">
+        <% if exchangepost.images.attached? %>
+          <div id="carouselControls<%= i %>" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% exchangepost.images.each_with_index do |image, i| %>
+                <div class="ratio ratio-1x1 carousel-item <%= "active" if i.zero? %>">
+                  <%= image_tag image, alt: "exchangepost image", class: "exchangepost-img rounded w-100 d-block" %>
+                </div>
+              <% end %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls<%= i %>" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselControls<%= i %>" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        <% else %>
+          <%= image_tag "no_image.jpg", alt: "exchangepost image", class: "exchangepost-no-img rounded w-100 d-block" %>
+        <% end %>
+        <div class="text-end">
+          <small>更新日：<%= l exchangepost.updated_at, format: :short %></small><br>
+          <small>投稿日：<%= l exchangepost.created_at, format: :short %></small><br>
+          <% if current_user&.== exchangepost.user %>
+            <div class="exchangepost-delete-link">
+              <%= link_to exchangepost, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
+                <i class="fas fa-trash-alt me-1"></i>投稿を削除
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

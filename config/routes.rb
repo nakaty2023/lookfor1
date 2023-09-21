@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :users, only: %i[show index] do
     member do
       get :profile
+      get :exchangeposts
     end
   end
   resources :shopposts, only: %i[create destroy]
