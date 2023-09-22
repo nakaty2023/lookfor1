@@ -6,6 +6,8 @@ class ExchangepostsController < ApplicationController
   def show
     @exchangepost = Exchangepost.includes({ images_attachments: :blob }).find(params[:id])
     @user = @exchangepost.user
+    @comment = current_user.comments.build
+    @comments = @exchangepost.comments.includes(:user)
   end
 
   def new

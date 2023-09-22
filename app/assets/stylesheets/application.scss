@@ -262,3 +262,32 @@ aside {
   font-size: 11px;
   opacity: 0.5;
 }
+
+/* comment */
+
+.comments-wrapper {
+  margin-top: 60px;
+  li {
+    padding: 10px 10px;
+  }
+}
+
+.comment-form {
+  textarea {
+    min-height: 300px;
+  }
+}
+
+.comment {
+  word-break: break-all;
+  font-size: 13px;
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  small {
+    font-size: 11px;
+  }
+}

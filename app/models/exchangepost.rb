@@ -1,5 +1,6 @@
 class Exchangepost < ApplicationRecord
   belongs_to :user
+  has_many :comments, dependent: :destroy
   has_many_attached :images do |attachable|
     attachable.variant :display, resize_to_limit: [400, 400]
   end
