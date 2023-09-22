@@ -12,6 +12,14 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+    @exchangepost = @comment.exchangepost
+    @comment.destroy
+    flash[:notice] = t('.success')
+    redirect_to @exchangepost, status: :see_other
+  end
+
   private
 
   def comment_params
