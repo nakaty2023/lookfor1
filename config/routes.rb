@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     member do
       get :profile
       get :exchangeposts
+      get :comments
     end
   end
   resources :shopposts, only: %i[create destroy]

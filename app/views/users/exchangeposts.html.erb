@@ -11,7 +11,7 @@
           <%= link_to "グッズ交換希望投稿", "#", class: "nav-link active", aria: { current: "page" } %>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">コメント</a>
+          <%= link_to "コメント", comments_user_path, class: "nav-link" %>
         </li>
       </ul>
       <% if @exchangeposts.any? %>
