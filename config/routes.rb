@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     end
   end
   resources :shopposts, only: %i[create destroy]
-  resources :exchangeposts, only: %i[new create index destroy show]
+  resources :exchangeposts, only: %i[new create index destroy show] do
+    collection do
+      get :search
+    end
+  end
   resources :comments, only: %i[create destroy]
 end

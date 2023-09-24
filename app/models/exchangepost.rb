@@ -13,4 +13,10 @@ class Exchangepost < ApplicationRecord
                                      message: :content_type_invalid },
                      size: { less_than: 5.megabytes, message: :byte_size_out_of_range },
                      limit: { min: 0, max: 4, message: :limit_out_of_range }
+  def self.ransackable_attributes(auth_object = nil)
+    ["give_item_description", "give_item_name", "place", "created_at", "updated_at", "want_item_description", "want_item_name"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

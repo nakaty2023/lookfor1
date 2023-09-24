@@ -3,6 +3,11 @@ class ExchangepostsController < ApplicationController
     @exchangeposts = Exchangepost.all.includes(:user, { images_attachments: :blob })
   end
 
+  def search
+    @q = Exchangepost.ransack(params[:q_exchangeposts])
+    @exchangeposts = @q.result(distinct: true).includes(:user, { images_attachments: :blob })
+  end
+
   def show
     @exchangepost = Exchangepost.includes({ images_attachments: :blob }).find(params[:id])
     @user = @exchangepost.user
