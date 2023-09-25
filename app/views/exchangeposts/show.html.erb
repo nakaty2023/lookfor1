@@ -39,7 +39,7 @@
       <h1 class="fs-5 text-start mb-0 fw-bold">譲りたいグッズ</h1>
       <p><%= @exchangepost.give_item_name %></p>
       <h2 class="fw-bold mt-4">譲りたいグッズの説明</h2>
-      <span><%= @exchangepost.give_item_description %></span>
+      <span><%= safe_join(@exchangepost.give_item_description.split("\n"),tag(:br)) %></span>
       <h2 class="fw-bold mt-4">希望する交換場所</h2>
       <span><%= @exchangepost.place %></span>
     </div>

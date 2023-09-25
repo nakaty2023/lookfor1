@@ -47,4 +47,5 @@ Rails/LexicallyScopedActionFilter:
   Exclude:
     - 'app/controllers/users/registrations_controller.rb'
 
-
+Rails/I18nLocaleTexts:
+  Enabled: false

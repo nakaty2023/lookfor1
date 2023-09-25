@@ -1,6 +1,8 @@
 ja:
   activerecord:
     attributes:
+      user:
+        image: 画像
       shoppost:
         content: 投稿内容
         images: 画像
@@ -12,6 +14,7 @@ ja:
         place: 希望する交換場所
     models:
       shoppost: 店舗に関する投稿
+      user: ユーザー
     errors:
       messages:
         record_invalid: "バリデーションに失敗しました: %{errors}"

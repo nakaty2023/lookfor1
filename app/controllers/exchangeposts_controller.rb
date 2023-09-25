@@ -1,18 +1,19 @@
 class ExchangepostsController < ApplicationController
   def index
-    @exchangeposts = Exchangepost.all.includes(:user, { images_attachments: :blob })
+    @exchangeposts = Exchangepost.all.includes({ user: { image_attachment: :blob } }, { images_attachments: :blob })
   end
 
   def search
     @q = Exchangepost.ransack(params[:q_exchangeposts])
-    @exchangeposts = @q.result(distinct: true).includes(:user, { images_attachments: :blob })
+    @exchangeposts = @q.result(distinct: true).includes({ user: { image_attachment: :blob } },
+                                                        { images_attachments: :blob })
   end
 
   def show
     @exchangepost = Exchangepost.includes({ images_attachments: :blob }).find(params[:id])
     @user = @exchangepost.user
-    @comment = current_user.comments.build
-    @comments = @exchangepost.comments.includes(:user)
+    @comment = Comment.new
+    @comments = @exchangepost.comments.includes({ user: { image_attachment: :blob } })
   end
 
   def new

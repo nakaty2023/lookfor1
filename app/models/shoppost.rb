@@ -8,6 +8,6 @@ class Shoppost < ApplicationRecord
   validates :content, presence: true
   validates :images, content_type: { in: %w[image/jpeg image/gif image/png image/jpg],
                                      message: :content_type_invalid },
-                     size: { less_than: 5.megabytes, message: :byte_size_out_of_range },
+                     size: { less_than: 5.megabytes, message: '画像のサイズは5MB以下である必要があります。' },
                      limit: { min: 0, max: 4, message: :limit_out_of_range }
 end
