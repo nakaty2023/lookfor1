@@ -1,11 +1,20 @@
 ja:
   activerecord:
     attributes:
+      user:
+        image: 画像
       shoppost:
         content: 投稿内容
         images: 画像
+      exchangepost:
+        give_item_name: 譲りたい商品名
+        give_item_description: 譲りたい商品の説明
+        want_item_name: 欲しい商品名
+        want_item_description: 欲しい商品の説明
+        place: 希望する交換場所
     models:
       shoppost: 店舗に関する投稿
+      user: ユーザー
     errors:
       messages:
         record_invalid: "バリデーションに失敗しました: %{errors}"
@@ -186,11 +195,22 @@ ja:
     am: 午前
     formats:
       default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
-      long: "%Y/%m/%d %H:%M"
-      short: "%m/%d %H:%M"
+      long: "%Y年%m月%d日 %H:%M"
+      short: "%Y年%m月%d日"
     pm: 午後
   shopposts:
     create:
       success: '投稿が完了しました'
     destroy:
       success: '投稿を削除しました'
+  exchangeposts:
+    create:
+      success: '投稿が完了しました'
+    destroy:
+      success: '投稿を削除しました'
+  comments:
+    create:
+      success: '投稿が完了しました'
+    destroy:
+      success: '投稿を削除しました'
+

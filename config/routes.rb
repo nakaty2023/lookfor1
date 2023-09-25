@@ -12,7 +12,15 @@ Rails.application.routes.draw do
   resources :users, only: %i[show index] do
     member do
       get :profile
+      get :exchangeposts
+      get :comments
     end
   end
   resources :shopposts, only: %i[create destroy]
+  resources :exchangeposts, only: %i[new create index destroy show] do
+    collection do
+      get :search
+    end
+  end
+  resources :comments, only: %i[create destroy]
 end

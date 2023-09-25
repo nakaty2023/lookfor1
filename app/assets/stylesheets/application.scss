@@ -201,3 +201,93 @@ aside {
 .shopitems-link {
   text-decoration: none;
 }
+
+/* exchangepost */
+
+.exchangeposts-wrapper {
+  textarea {
+    min-height: 300px;
+  }
+}
+
+.exchangepost {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  .exchangepost-item {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    font-size: 13px;
+  }
+  a {
+    text-decoration: none;
+    font-size: 13px;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.exchangepost-delete-link {
+  font-size: 13px;
+}
+
+.exchangepost-img {
+  object-fit: cover;
+}
+
+.exchangepost-no-img {
+  opacity: 0.2;
+}
+
+.exchangepost-give, .exchangepost-want {
+  p {
+    font-size: 20px;
+  }
+  span {
+    font-size: 15px;
+  }
+}
+
+.exchangepost-give-user {
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.exchangepost-time {
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+/* comment */
+
+.comments-wrapper {
+  margin-top: 60px;
+  li {
+    padding: 10px 10px;
+  }
+}
+
+.comment-form {
+  textarea {
+    min-height: 300px;
+  }
+}
+
+.comment {
+  word-break: break-all;
+  font-size: 13px;
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  small {
+    font-size: 11px;
+  }
+}

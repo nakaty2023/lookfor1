@@ -1,0 +1,110 @@
+<% provide(:title, 'グッズ交換希望投稿詳細') %>
+<div class="text-end mt-4 pe-2">
+  <div class="exchangepost-time">更新：<%= l @exchangepost.updated_at, format: :long %></div>
+  <div class="exchangepost-time">投稿：<%= l @exchangepost.created_at, format: :long %></div>
+  <% if current_user&.== @user %>
+    <div class="exchangepost-delete-link">
+      <%= link_to @exchangepost, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
+        <i class="fas fa-trash-alt me-1"></i>投稿を削除
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-7 col-lg-8 p-4">
+    <div class="exchangepost-give mb-4">
+      <div class="row">
+        <% if @exchangepost.images.attached? %>
+          <div id="carouselControl" class="carousel slide col-sm-8 offset-sm-2 col-lg-6 offset-lg-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% @exchangepost.images.each_with_index do |image, i| %>
+                <div class="ratio ratio-1x1 carousel-item <%= "active" if i.zero? %>">
+                  <%= image_tag image, alt: "exchangepost image", class: "exchangepost-img rounded w-100 d-block" %>
+                </div>
+              <% end %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselControl" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselControl" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        <% else %>
+          <%= image_tag "no_image.jpg", alt: "exchangepost image", class: "exchangepost-no-img rounded w-100 d-block" %>
+        <% end %>
+      </div>
+      <h1 class="fs-5 text-start mb-0 fw-bold">譲りたいグッズ</h1>
+      <p><%= @exchangepost.give_item_name %></p>
+      <h2 class="fw-bold mt-4">譲りたいグッズの説明</h2>
+      <span><%= safe_join(@exchangepost.give_item_description.split("\n"),tag(:br)) %></span>
+      <h2 class="fw-bold mt-4">希望する交換場所</h2>
+      <span><%= @exchangepost.place %></span>
+    </div>
+    <hr>
+    <div class="exchangepost-want">
+      <h1 class="fs-5 text-start mb-0 fw-bold">欲しいグッズ</h1>
+      <p><%= @exchangepost.want_item_name %></p>
+      <h2 class="fw-bold mt-4">欲しいグッズの説明</h2>
+      <span><%= safe_join(@exchangepost.want_item_description.split("\n"),tag(:br)) %></span>
+    </div>
+  </div>
+  <div class="col-md-5 col-lg-4 py-4">
+    <hr>
+    <div class="row mb-4">
+      <h2 class="fw-bold">投稿者</h2>
+      <div class="col-3 d-flex justify-content-center align-items-center">
+        <%= image_tag @user.display_image, alt: "User image", class: "rounded-circle w-100" %>
+      </div>
+      <div class="exchangepost-give-user col-9 d-flex flex-column justify-content-around">
+        <%= link_to @user.name, @user, class: "fs-6 text-wrap" %>
+        <div class="user-age-gender">
+          <span>年齢: <%= @user.age.present? ? @user.age : '未登録' %>　|　</span>
+          <span>性別: <%= @user.gender.present? ? @user.gender : '未登録' %></span>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="comments-wrapper mb-4">
+      <h2 class="fw-bold mb-3">コメント(<%= @comments.count %>)</h2>
+      <% if @comments.any? %>
+        <ol class="list-group">
+          <% @comments.each do |comment| %>
+            <li class="list-group-item list-group-item-action d-flex gap-2" aria-current="true">
+              <%= image_tag comment.user.display_image, alt: "User image", class: "rounded-circle flex-shrink-0", width: 40, height:40 %>
+              <div class="w-100">
+                <div class="row comment">
+                  <%= link_to comment.user.name, comment.user %>
+                  <p class="mb-2"><%= comment.content %></p>
+                  <div class="d-flex justify-content-between">
+                    <small class="opacity-50"><%= time_ago_in_words(comment.created_at) %>前</small>
+                    <% if current_user&.== comment.user %>
+                      <small class="text-danger">
+                        <%= link_to comment, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
+                          <i class="fas fa-trash-alt me-1"></i>削除
+                        <% end %>
+                      </small>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ol>
+      <% end %>
+    </div>
+    <div class="comment-form mt-4">
+      <%= form_with model: @comment do |f| %>
+        <%= render "shared/error_messages", resource: @comment %>
+        <span>投稿へのコメント</span>
+        <div class="mt-2">
+          <%= f.hidden_field :exchangepost_id, value: @exchangepost.id %>
+          <%= f.text_area :content, placeholder: "コメントする", class: "form-control w-100 mb-3" %>
+          <%= f.submit "コメントを送信する", class: "btn btn-primary w-100" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

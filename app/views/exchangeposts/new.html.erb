@@ -1,0 +1,37 @@
+<% provide(:title, 'グッズ交換希望 新規投稿') %>
+<div class="exchangeposts-wrapper p-4">
+  <h1 class="fs-3 fw-bold">グッズ交換希望　新規投稿</h1>
+  <div class="row">
+    <div class="col-sm-10 offset-sm-1 col-md-6 offset-md-3">
+      <%= form_with model: @exchangepost, data: { turbo: false } do |f| %>
+        <%= render "shared/error_messages", resource: @exchangepost %>
+        <div class="mb-3">
+          <%= f.label :images, "譲りたい商品の画像（最大4枚）", class: "form-label" %>
+          <%= f.file_field :images, multiple: true, include_hidden: false, accept: "image/png,image/jpeg,image/jpg,image/gif", class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :give_item_name, class: "form-label required" %>
+          <%= f.text_field :give_item_name, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :give_item_description, class: "form-label required" %>
+          <%= f.text_area :give_item_description, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :want_item_name, class: "form-label required" %>
+          <%= f.text_field :want_item_name, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :want_item_description, class: "form-label required" %>
+          <%= f.text_area :want_item_description, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :place, class: "form-label" %>
+          <%= f.text_field :place, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.submit "投稿する", class: "btn btn-primary w-100" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
