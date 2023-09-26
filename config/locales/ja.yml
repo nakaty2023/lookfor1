@@ -15,6 +15,7 @@ ja:
     models:
       shoppost: 店舗に関する投稿
       user: ユーザー
+      exchangepost: グッズ交換に関する投稿
     errors:
       messages:
         record_invalid: "バリデーションに失敗しました: %{errors}"
