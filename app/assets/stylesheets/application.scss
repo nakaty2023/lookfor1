@@ -3,6 +3,10 @@
 
 /* universal */
 
+body {
+  padding-top: 70px;
+}
+
 section {
   overflow: auto;
 }
@@ -42,6 +46,12 @@ h2 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+}
+
+/* Dropdown menu */
+
+.active {
+  display: block;
 }
 
 /* footer */
