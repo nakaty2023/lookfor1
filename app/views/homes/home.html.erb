@@ -1,98 +1,137 @@
-<div class="p-4">
-  <h1 class="fs-3 fw-bold">
-    <i class="fa-solid fa-magnifying-glass me-1" style="color: #0d6efd;"></i>グッズを探す
-  </h1>
-  <div class="row">
-    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <h2>店舗名・商品名・住所で検索する</h2>
-      <%= search_form_for @q_shops, as: :q_shops, data: { turbo: false } do |f| %>
-        <div class="row mb-2">
-          <div class="col-sm-3">
-            <i class="fa-solid fa-shop me-1" style="color: #0d6efd"></i>
-            <%= f.label :name_cont, "店舗名", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-9">
-            <%= f.search_field :name_cont, class: 'form-control', placeholder: '例：ローソン ○○店' %>
+<div>
+  <div class="px-4 my-3 text-center">
+    <h1 class="display-4 fw-bold">Look for 1</h1>
+  </div>
+  <div class="row mb-5">
+    <div class="col-md-10 offset-md-1 py-4">
+      <div class="row">
+        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4">
+          <p class="mb-1">店舗名・商品名・住所で検索</p>
+          <%= search_form_for @q_shops, as: :q_shops, data: { turbo: false } do |f| %>
+            <div class="row mb-2">
+              <div class="col-sm-3 col-lg-4">
+                <i class="fa-solid fa-shop me-1" style="color: #0d6efd"></i>
+                <%= f.label :name_cont, "店舗名", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :name_cont, class: 'form-control', placeholder: '例：ローソン ○○店' %>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-3 col-lg-4">
+                <i class="fa-solid fa-hippo me-1" style="color: #0d6efd"></i>
+                <%= f.label :items_name_cont, "商品名", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-3 col-lg-4">
+                <i class="fa-solid fa-location-dot me-1" style="color: #0d6efd"></i>
+                <%= f.label :address_cont, "住所", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :address_cont, class: 'form-control', placeholder: '例：○○県○○市' %>
+              </div>
+            </div>
+            <%= f.submit '検索', class: "w-100 btn btn-primary mb-4" %>
+          <% end %>
+          <p class="mt-4 mb-1">現在地で検索</p>
+          <%= search_form_for @q_shops, url:search_shops_path, as: :q_shops, data: { turbo: false } do |f| %>
+            <div class="row mb-2">
+              <div class="col-sm-3  col-lg-4">
+                <i class="fa-solid fa-hippo me-1" style="color: #0d6efd"></i>
+                <%= f.label :items_name_cont, "商品名", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
+              </div>
+            </div>
+            <%= f.hidden_field :lat, id: 'user_latitude' %>
+            <%= f.hidden_field :lon, id: 'user_longitude' %>
+            <%= f.submit '検索', class: "w-100 btn btn-primary", id: "search_button", disabled: true %>
+          <% end %>
+        </div>
+        <div class="order-1 order-lg-2 col-lg-6 p-4">
+          <div class="row">
+            <h2 class="fw-bold text-center display-6 mb-4">店舗を検索</h2>
+            <p class="mb-0">店舗名、商品名、住所のいずれかの条件で、欲しいキャラクターの一番くじを取り扱っている店舗を検索することができます。</p>
+            <p>現在地で検索することも可能です。</p>
+            <div class="col-4 offset-4">
+              <%= image_tag "search.png", alt: "Search image", class: "img-fluid" %>
+            </div>
           </div>
         </div>
-        <div class="row mb-2">
-          <div class="col-sm-3">
-            <i class="fa-solid fa-hippo me-1" style="color: #0d6efd"></i>
-            <%= f.label :items_name_cont, "商品名", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-9">
-            <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-3">
-            <i class="fa-solid fa-location-dot me-1" style="color: #0d6efd"></i>
-            <%= f.label :address_cont, "住所", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-9">
-            <%= f.search_field :address_cont, class: 'form-control', placeholder: '例：○○県○○市' %>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <%= f.submit '検索', class: "btn btn-primary" %>
-        </div>
-      <% end %>
-      <h2 class="mt-4">現在地で検索する</h2>
-      <%= search_form_for @q_shops, url:search_shops_path, as: :q_shops, data: { turbo: false } do |f| %>
-        <div class="row mb-2">
-          <div class="col-sm-3">
-            <i class="fa-solid fa-hippo me-1" style="color: #0d6efd"></i>
-            <%= f.label :items_name_cont, "商品名", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-9">
-            <%= f.search_field :items_name_cont, class: 'form-control', placeholder: '例：進撃の巨人、ワンピース...' %>
-          </div>
-        </div>
-        <%= f.hidden_field :lat, id: 'user_latitude' %>
-        <%= f.hidden_field :lon, id: 'user_longitude' %>
-        <div class="row mb-3">
-          <%= f.submit '検索', class: "btn btn-primary", id: "search_button", disabled: true %>
-        </div>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
-<div class="p-4">
-  <h1 class="fs-3 fw-bold">
-    <i class="fa-solid fa-magnifying-glass me-1" style="color: #0d6efd;"></i>グッズを交換する
-  </h1>
-  <div class="row">
-    <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <h2>欲しいグッズを交換してくれるユーザーを探す</h2>
-      <%= search_form_for @q_exchangeposts, url:search_exchangeposts_path, as: :q_exchangeposts, data: { turbo: false } do |f| %>
-        <div class="row mb-2">
-          <div class="col-sm-4">
-            <%= f.label :give_item_name_or_give_item_description_cont, "欲しいグッズ名", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-8">
-            <%= f.search_field :give_item_name_or_give_item_description_cont, class: 'form-control', placeholder: '例：僕のヒーローアカデミアHEROVSVILLAINS' %>
+  <div class="row my-5">
+    <div class="col-md-10 offset-md-1 py-4">
+      <div class="row">
+        <div class="col-lg-6 mb-4 px-4 d-flex flex-column justify-content-center">
+          <div class="row">
+            <h2 class="fw-bold text-center display-6 mb-4">店舗について投稿</h2>
+            <p class="mb-0">実際に店舗へ行った際のくじの在庫状況など、店舗について投稿することができます。</p>
+            <p>欲しいキャラクターの在庫状況について、他のユーザーが投稿していれば、在庫状況を踏まえて店舗を探すことができます。</p>
+            <div class="col-4 offset-4">
+              <%= image_tag "shoppost.png", alt: "Shoppost image", class: "img-fluid" %>
+            </div>
           </div>
         </div>
-        <div class="row mb-2">
-          <div class="col-sm-4">
-            <%= f.label :want_item_name_or_want_item_description_cont, "譲りたいグッズ名", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-8">
-            <%= f.search_field :want_item_name_or_want_item_description_cont, class: 'form-control', placeholder: '例：ワンピースRED' %>
+        <div class="col-lg-6 p-4 text-center">
+          <%= image_tag "shoppost_sample.png", alt: "Shoppost_sample image", class: "img-fluid" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-10 offset-md-1 py-4 mb-4">
+      <div class="row">
+        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4 d-flex flex-column justify-content-center">
+          <p class="mb-2">欲しいor譲りたいグッズ名・交換場所で検索</p>
+          <%= search_form_for @q_exchangeposts, url:search_exchangeposts_path, as: :q_exchangeposts, data: { turbo: false } do |f| %>
+            <div class="row mb-2">
+              <div class="col-sm-3 col-lg-4">
+                <i class="fa-solid fa-heart me-1" style="color: #0d6efd"></i>
+                <%= f.label :give_item_name_or_give_item_description_cont, "欲しい", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :give_item_name_or_give_item_description_cont, class: 'form-control', placeholder: '例：僕のヒーローアカデミアHEROVSVILLAINS' %>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-3 col-lg-4">
+                <i class="fa-solid fa-gift me-1" style="color: #0d6efd"></i>
+                <%= f.label :want_item_name_or_want_item_description_cont, "譲りたい", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :want_item_name_or_want_item_description_cont, class: 'form-control', placeholder: '例：ワンピースRED' %>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-sm-3 col-lg-4">
+                <i class="fa-solid fa-map-pin me-1" style="color: #0d6efd"></i>
+                <%= f.label :place_cont, "交換場所", class: "col-form-label" %>
+              </div>
+              <div class="col-sm-9 col-lg-8">
+                <%= f.search_field :place_cont, class: 'form-control', placeholder: '例：東京都○○区△△△' %>
+              </div>
+            </div>
+            <%= f.submit '検索', class: "w-100 btn btn-primary" %>
+          <% end %>
+        </div>
+        <div class="order-1 order-lg-2 col-lg-6 p-4">
+          <div class="row">
+            <h2 class="fw-bold text-center display-6 mb-4">グッズを交換する</h2>
+            <p class="mb-0">店舗でくじを引いて欲しいキャラクターが当たらなかった時は、他のユーザーと交換してみませんか？</p>
+            <p>自分が欲しいキャラクターグッズを譲ってくれるユーザーを探してみましょう！</p>
+            <div class="col-8 offset-2">
+              <%= image_tag "exchange.png", alt: "Exchange image", class: "img-fluid" %>
+            </div>
           </div>
         </div>
-        <div class="row mb-2">
-          <div class="col-sm-4">
-            <%= f.label :place_cont, "交換場所", class: "col-form-label" %>
-          </div>
-          <div class="col-sm-8">
-            <%= f.search_field :place_cont, class: 'form-control', placeholder: '例：東京都○○区△△△' %>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <%= f.submit '検索', class: "btn btn-primary" %>
-        </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
