@@ -48,12 +48,6 @@ p {
   line-height: 1.7em;
 }
 
-/* Dropdown menu */
-
-.active {
-  display: block;
-}
-
 /* footer */
 
 footer {
@@ -300,4 +294,8 @@ aside {
   small {
     font-size: 11px;
   }
+}
+
+.top-wrapper {
+  margin-bottom: 200px;
 }
