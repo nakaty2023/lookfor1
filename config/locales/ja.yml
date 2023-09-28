@@ -12,6 +12,13 @@ ja:
         want_item_name: 欲しい商品名
         want_item_description: 欲しい商品の説明
         place: 希望する交換場所
+    enums:
+      user:
+        gender:
+          male: 男性
+          female: 女性
+          non_binary: ノンバイナリー
+          no_answer: 無回答
     models:
       shoppost: 店舗に関する投稿
       user: ユーザー
@@ -125,7 +132,7 @@ ja:
       too_long: は%{count}文字以内で入力してください
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
-      content_type_invalid: 'は有効な画像形式である必要があります'
+      content_type_invalid: は有効な画像形式である必要があります
       byte_size_out_of_range: 'のサイズは%{less_than}MB以下である必要があります'
       limit_out_of_range: 'は最大%{max}枚まで添付できます'
     template:

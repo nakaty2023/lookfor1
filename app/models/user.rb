@@ -8,7 +8,7 @@ class User < ApplicationRecord
     attachable.variant :display, resize_to_limit: [400, 400]
   end
   devise :database_authenticatable, :registerable, :validatable
-  enum gender: { 男性: 0, 女性: 1, ノンバイナリー: 2, 無回答: 3 }
+  enum gender: { male: 0, female: 1, non_binary: 2, no_answer: 3 }
   validates :name, presence: true, length: { maximum: 30 }
   validates :age, numericality: {
     only_integer: true,
@@ -25,5 +25,9 @@ class User < ApplicationRecord
     else
       'default_avatar.jpg'
     end
+  end
+
+  def self.human_attribute_enum_value(attr_name, key)
+    I18n.t("activerecord.enums.#{model_name.i18n_key}.#{attr_name}.#{key}")
   end
 end
