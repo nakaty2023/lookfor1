@@ -46,7 +46,7 @@
             <%= f.label :gender, class: "col-form-label" %>
           </div>
           <div class="col-sm-8">
-            <%= f.select :gender, gender_options, { include_blank: '--選択してください--' }, class: "form-select" %>
+            <%= f.select :gender, User.enum_options_for_select(:gender), { include_blank: '--選択してください--' }, class: "form-select" %>
           </div>
         </div>
         <div class="row mb-4">
