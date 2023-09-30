@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :comment do
-    content { 'テストコメント' }
+    sequence(:content) { |n| "テストコメント#{n}" }
   end
 end

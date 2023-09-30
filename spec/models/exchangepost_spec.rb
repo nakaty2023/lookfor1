@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Exchangepost, type: :model, focus: true do
+RSpec.describe Exchangepost, type: :model do
   describe 'バリデーション' do
     let(:user) { create(:user) }
 
@@ -165,7 +165,7 @@ RSpec.describe Exchangepost, type: :model, focus: true do
     end
   end
 
-  describe '関連する子モデルの削除', focus: true do
+  describe '関連する子モデルの削除' do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
     let!(:exchangepost) { create(:exchangepost, user:) }
