@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :shoppost do
-    content { 'MyText' }
-    user { nil }
-    shop { nil }
+    sequence(:content) { |n| "テスト投稿#{n}" }
   end
 end

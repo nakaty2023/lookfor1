@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :comment do
-    content { 'MyText' }
-    user { nil }
-    exchangepost { nil }
+    sequence(:content) { |n| "テストコメント#{n}" }
   end
 end

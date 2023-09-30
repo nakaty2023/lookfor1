@@ -5,7 +5,7 @@ class Shoppost < ApplicationRecord
     attachable.variant :display, resize_to_limit: [400, 400]
   end
   default_scope -> { order(created_at: :desc) }
-  validates :content, presence: true
+  validates :content, presence: true, length: { maximum: 400 }
   validates :images, content_type: { in: %w[image/jpeg image/gif image/png image/jpg],
                                      message: :content_type_invalid },
                      size: { less_than: 5.megabytes, message: '画像のサイズは5MB以下である必要があります。' },
