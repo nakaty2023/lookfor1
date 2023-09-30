@@ -119,4 +119,19 @@ RSpec.describe Shoppost, type: :model do
       expect(Shoppost.all).to eq([shoppost1, shoppost2, shoppost3])
     end
   end
+
+  describe '画像のバリアント' do
+    let(:user) { create(:user) }
+    let(:shop) { create(:shop) }
+    let(:image) { fixture_file_upload('spec/fixtures/files/large_image.jpeg', 'image/jpeg') }
+    let(:shoppost) { create(:shoppost, user:, shop:) }
+
+    it '400×400以内にリサイズされる' do
+      shoppost.images.attach(image)
+      variant = shoppost.images.first.variant(:display).processed
+      image = MiniMagick::Image.read(variant.service.download(variant.key))
+      expect(image.width).to be <= 400
+      expect(image.height).to be <= 400
+    end
+  end
 end

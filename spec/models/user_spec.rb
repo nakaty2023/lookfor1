@@ -211,4 +211,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '画像のバリアント' do
+    let(:user) { create(:user) }
+    let(:image) { fixture_file_upload('spec/fixtures/files/large_image.jpeg', 'image/jpeg') }
+
+    it '400×400以内にリサイズされる' do
+      user.image.attach(image)
+      variant = user.image.variant(:display).processed
+      image = MiniMagick::Image.read(variant.service.download(variant.key))
+      expect(image.width).to be <= 400
+      expect(image.height).to be <= 400
+    end
+  end
 end
