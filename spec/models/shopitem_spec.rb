@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Shopitem, type: :model do
-  describe 'バリデーション', focus: true do
+  describe 'バリデーション' do
     let(:shop) { create(:shop) }
     let(:item) { create(:item) }
 
