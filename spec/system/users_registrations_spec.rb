@@ -32,7 +32,7 @@ RSpec.describe 'UsersRegistrations', type: :system do
     end
   end
 
-  context 'ユーザープロフィール変更', focus: true do
+  context 'ユーザープロフィール変更' do
     let(:user) { create(:user) }
 
     context '有効な値の場合' do
