@@ -7,4 +7,19 @@ module ApplicationHelper
       "#{page_title} | #{BASE_TITLE}"
     end
   end
+
+  def bootstrap_class_for(flash_type)
+    case flash_type.to_sym
+    when :success, :notice
+      'alert-success'
+    when :error, :alert
+      'alert-danger'
+    when :info
+      'alert-info'
+    when :warning
+      'alert-warning'
+    else
+      flash_type.to_s
+    end
+  end
 end
