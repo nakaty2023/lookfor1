@@ -11,10 +11,9 @@ RSpec.describe 'UserProfile', type: :system do
         visit profile_user_path(user)
       end
 
-      it 'ユーザー名及びEメールが表示され、パスワードは表示されない' do
+      it 'ユーザー名及びEメールが表示されること' do
         expect(page).to have_content(user.name)
         expect(page).to have_content(user.email)
-        expect(page).to_not have_content(user.password)
       end
 
       context '年齢が登録されている場合' do

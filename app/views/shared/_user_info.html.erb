@@ -8,7 +8,7 @@
         <h1 class="fs-2 m-0 text-start"><%= user.name %></h1>
         <div class="user-age-gender mt-2">
           <span>年齢: <%= user.age.present? ? user.age : '未登録' %>　|　</span>
-          <span>性別: <%= user.gender.present? ? user.gender : '未登録' %></span>
+          <span>性別: <%= user.gender.present? ? user.human_attribute_enum(:gender) : '未登録' %></span>
         </div>
       </div>
     </div>
