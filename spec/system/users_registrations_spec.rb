@@ -80,4 +80,17 @@ RSpec.describe 'UsersRegistrations', type: :system do
       end
     end
   end
+
+  context 'ユーザー削除' do
+    let(:user) { create(:user) }
+    it 'users/showのアカウント削除ボタンを押すとユーザーが削除され、トップページにリダイレクトされること' do
+      login(user)
+      expect do
+        click_on 'アカウント削除'
+        expect(page).to have_content('アカウントを削除しました。またのご利用をお待ちしております。')
+        expect(current_path).to eq(root_path)
+        expect(page).to_not have_content(user.name)
+      end.to change(User, :count).by(-1)
+    end
+  end
 end
