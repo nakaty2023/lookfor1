@@ -17,7 +17,7 @@
       <% if @shopposts.any? %>
         <ol class="list-group">
           <% @shopposts.each do |shoppost| %>
-            <li class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <li class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true", id="user-show-shoppost-<%= shoppost.id %>">
               <%= image_tag @user.display_image, alt: "User image", class: "rounded-circle flex-shrink-0", width: 50, height:50  %>
               <div class="d-flex w-100 justify-content-between">
                 <div class="row">

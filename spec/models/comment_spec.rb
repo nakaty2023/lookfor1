@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Comment, type: :model, focus: true do
+RSpec.describe Comment, type: :model do
   describe 'バリデーション' do
     let(:user) { create(:user) }
     let(:exchangepost) { create(:exchangepost, user:) }
