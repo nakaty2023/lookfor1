@@ -10,7 +10,7 @@ RSpec.describe 'UsersRegistrations', type: :system do
         fill_in 'Eメール', with: user.email
         fill_in 'パスワード', with: user.password
         fill_in 'パスワード（確認用）', with: user.password_confirmation
-        click_button 'アカウント登録'
+        expect { click_button 'アカウント登録' }.to change(User, :count).by(1)
         expect(page).to have_content('アカウント登録が完了しました。')
         expect(current_path).to eq(user_path(User.last))
       end
