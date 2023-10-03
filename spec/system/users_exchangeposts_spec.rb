@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'UsersExchangeposts', type: :system, focus: true do
+RSpec.describe 'UsersExchangeposts', type: :system do
   let(:user) { create(:user, age: 25, gender: 'male') }
   let(:other_user) { create(:user) }
   let(:user_image) { fixture_file_upload('spec/fixtures/files/sample.jpeg', 'image/jpeg') }
@@ -28,7 +28,7 @@ RSpec.describe 'UsersExchangeposts', type: :system, focus: true do
       expect(page).to have_link('コメント', href: comments_user_path(user))
     end
 
-    it 'ユーザーの投稿が表示されること' do
+    it 'ユーザーに紐づく投稿一覧が表示されること' do
       user_exchangeposts.each do |exchangepost|
         exchangepost.images.attach(exchangepost_image)
       end

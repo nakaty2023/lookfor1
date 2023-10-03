@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'UsersShow', type: :system, focus: true do
+RSpec.describe 'UsersShow', type: :system do
   let(:user) { create(:user, age: 25, gender: 'male') }
   let(:other_user) { create(:user) }
   let(:shop) { create(:shop) }
