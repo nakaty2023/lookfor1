@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Shopposts', type: :system, focus: true do
+RSpec.describe 'Shopposts', type: :system do
   include ActionView::Helpers::DateHelper
 
   let(:user) { create(:user) }

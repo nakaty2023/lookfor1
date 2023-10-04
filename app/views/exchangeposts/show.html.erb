@@ -72,7 +72,7 @@
       <% if @comments.any? %>
         <ol class="list-group">
           <% @comments.each do |comment| %>
-            <li class="list-group-item list-group-item-action d-flex gap-2" aria-current="true">
+            <li class="list-group-item list-group-item-action d-flex gap-2" aria-current="true" id="exchangepost-comment-<%= comment.id %>">
               <%= image_tag comment.user.display_image, alt: "User image", class: "rounded-circle flex-shrink-0", width: 40, height:40 %>
               <div class="w-100">
                 <div class="row comment">

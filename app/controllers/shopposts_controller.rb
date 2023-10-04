@@ -20,7 +20,6 @@ class ShoppostsController < ApplicationController
   end
 
   def destroy
-    @shoppost = Shoppost.find(params[:id])
     @shop = @shoppost.shop
     @shoppost.destroy
     flash[:notice] = t('.success')
@@ -34,7 +33,7 @@ class ShoppostsController < ApplicationController
   end
 
   def correct_user
-    @shoppost = current_user.shopposts.find_by(id: params[:id])
+    @shoppost = current_user.shopposts.find(params[:id])
     redirect_to root_url, status: :see_other if @shoppost.nil?
   end
 end
