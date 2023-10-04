@@ -46,12 +46,12 @@
     </script>
     <hr>
     <div class="row py-4 m-0">
-      <h2 class="text-center mb-4">新規投稿</h2>
+      <h2 class="text-center mb-4">店舗に関する新規投稿</h2>
       <%= form_with model: @shoppost, data: { turbo: false } do |f| %>
         <%= render "shared/error_messages", resource: @shoppost %>
         <div class="mb-3">
           <%= f.hidden_field :shop_id, value: @shop.id %><br>
-          <%= f.text_area :content, placeholder: "店舗に関するコメントを入力してください", class: "form-control shoppost-textarea w-100" %>
+          <%= f.text_area :content, placeholder: "店舗に関する投稿内容を入力してください", class: "form-control shoppost-textarea w-100" %>
         </div>
         <div class="input-group mb-3">
           <%= f.label :images, "画像", class: "input-group-text" %>

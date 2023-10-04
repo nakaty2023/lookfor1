@@ -1,4 +1,7 @@
 class ExchangepostsController < ApplicationController
+  before_action :authenticate_user!, only: %i[new create destroy]
+  before_action :correct_user, only: :destroy
+
   def index
     @exchangeposts = Exchangepost.all.includes({ user: { image_attachment: :blob } }, { images_attachments: :blob })
   end
@@ -42,5 +45,12 @@ class ExchangepostsController < ApplicationController
   def exchangepost_params
     params.require(:exchangepost).permit(:give_item_name, :give_item_description, :want_item_name,
                                          :want_item_description, :place, images: [])
+  end
+
+  def correct_user
+    @exchangepost = Exchangepost.find(params[:id])
+    return if @exchangepost.user == current_user
+
+    redirect_to root_path, alert: '他のユーザーの投稿は削除できません'
   end
 end

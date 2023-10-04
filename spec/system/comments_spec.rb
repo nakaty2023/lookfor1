@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Comments', type: :system, focus: true do
+RSpec.describe 'Comments', type: :system do
   include ActionView::Helpers::DateHelper
 
   let(:user) { create(:user) }
