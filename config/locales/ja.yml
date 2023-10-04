@@ -12,6 +12,8 @@ ja:
         want_item_name: 欲しい商品名
         want_item_description: 欲しい商品の説明
         place: 希望する交換場所
+      comment:
+        content: コメント内容
     enums:
       user:
         gender:
@@ -23,6 +25,7 @@ ja:
       shoppost: 店舗に関する投稿
       user: ユーザー
       exchangepost: グッズ交換に関する投稿
+      comment: コメント
     errors:
       messages:
         record_invalid: "バリデーションに失敗しました: %{errors}"
@@ -220,5 +223,5 @@ ja:
     create:
       success: '投稿が完了しました'
     destroy:
-      success: '投稿を削除しました'
+      success: 'コメントを削除しました'
 
