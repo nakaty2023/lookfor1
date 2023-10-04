@@ -23,7 +23,7 @@ RSpec.describe 'UsersRegistrations', type: :system do
         fill_in 'Eメール', with: ''
         fill_in 'パスワード', with: ''
         fill_in 'パスワード（確認用）', with: ''
-        click_button 'アカウント登録'
+        expect { click_button 'アカウント登録' }.to_not change(User, :count)
         expect(page).to have_content('ユーザー名を入力してください')
         expect(page).to have_content('Eメールを入力してください')
         expect(page).to have_content('パスワードを入力してください')
