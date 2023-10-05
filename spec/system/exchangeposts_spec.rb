@@ -2,9 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Exchangeposts', type: :system, focus: true do
   let(:user) { create(:user, age: 25, gender: 'male') }
-  let(:other_user) { create(:user) }
-  let!(:exchangepost) { create(:exchangepost, user:) }
-  let!(:other_exchangepost) { create(:exchangepost, user: other_user) }
 
   context 'グッズ交換に関する新規投稿' do
     context 'ログイン済みの場合' do
@@ -72,9 +69,9 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
   end
 
   context 'グッズ交換に関する投稿の削除' do
-    # let(:other_user2) { create(:user) }
-    # let!(:comment) { create(:comment, user:, exchangepost:) }
-    # let!(:other_comment) { create(:comment, user: other_user2, exchangepost:) }
+    let(:other_user) { create(:user) }
+    let!(:exchangepost) { create(:exchangepost, user:) }
+    let!(:other_exchangepost) { create(:exchangepost, user: other_user) }
 
     context 'ログイン済みの場合' do
       before do
@@ -86,7 +83,7 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
           visit exchangepost_path(exchangepost)
           expect(current_path).to eq(exchangepost_path(exchangepost))
           expect do
-            within ".exchangepost-delete-link" do
+            within '.exchangepost-delete-link' do
               click_on '投稿を削除'
             end
           end.to change(Exchangepost, :count).by(-1)
@@ -99,8 +96,8 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
         it '削除できないこと' do
           visit exchangepost_path(other_exchangepost)
           expect(current_path).to eq(exchangepost_path(other_exchangepost))
-          expect(page).to_not have_selector("div.exchangepost-delete-link")
-          expect(page).to_not have_link("投稿を削除")
+          expect(page).to_not have_selector('div.exchangepost-delete-link')
+          expect(page).to_not have_link('投稿を削除')
         end
       end
     end
@@ -113,6 +110,85 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
         visit exchangepost_path(other_exchangepost)
         expect(current_path).to eq(exchangepost_path(other_exchangepost))
         expect(page).to_not have_link('投稿を削除')
+      end
+    end
+  end
+
+  context 'グッズ交換に関する投稿の検索' do
+    let!(:exchangepost1) do
+      create(:exchangepost, user:,
+                            give_item_name: 'ワンピース', want_item_name: '呪術廻戦', place: '東京都渋谷区')
+    end
+    let!(:exchangepost2) do
+      create(:exchangepost, user:,
+                            give_item_name: '呪術廻戦', want_item_name: '東京リベンジャーズ', place: '大阪府大阪市')
+    end
+    let!(:exchangepost3) do
+      create(:exchangepost, user:,
+                            give_item_name: '東京リベンジャーズ', want_item_name: 'ワンピース', place: '北海道札幌市')
+    end
+
+    context '検索したいグッズに関する投稿がある場合' do
+      it '欲しいグッズ名で投稿を検索できること' do
+        visit root_path
+        fill_in '欲しい', with: 'ワンピース'
+        click_on 'exchangeposts_search'
+        expect(page).to have_content(exchangepost1.give_item_name)
+        expect(page).to have_content(exchangepost1.give_item_description)
+        expect(page).to have_content(exchangepost1.want_item_name)
+        expect(page).to have_content(exchangepost1.want_item_description)
+        expect(page).to have_content(exchangepost1.place)
+        expect(page).to_not have_content(exchangepost2.give_item_description)
+        expect(page).to_not have_content(exchangepost2.want_item_description)
+        expect(page).to_not have_content(exchangepost3.give_item_description)
+        expect(page).to_not have_content(exchangepost3.want_item_description)
+      end
+
+      it '譲りたいグッズ名で投稿を検索できること' do
+        visit root_path
+        fill_in '譲りたい', with: 'ワンピース'
+        click_on 'exchangeposts_search'
+        expect(page).to have_content(exchangepost3.give_item_name)
+        expect(page).to have_content(exchangepost3.give_item_description)
+        expect(page).to have_content(exchangepost3.want_item_name)
+        expect(page).to have_content(exchangepost3.want_item_description)
+        expect(page).to have_content(exchangepost3.place)
+        expect(page).to_not have_content(exchangepost1.give_item_description)
+        expect(page).to_not have_content(exchangepost1.want_item_description)
+        expect(page).to_not have_content(exchangepost2.give_item_description)
+        expect(page).to_not have_content(exchangepost2.want_item_description)
+      end
+
+      it '交換場所で投稿を検索できること' do
+        visit root_path
+        fill_in '交換場所', with: '大阪府大阪市'
+        click_on 'exchangeposts_search'
+        expect(page).to have_content(exchangepost2.give_item_name)
+        expect(page).to have_content(exchangepost2.give_item_description)
+        expect(page).to have_content(exchangepost2.want_item_name)
+        expect(page).to have_content(exchangepost2.want_item_description)
+        expect(page).to have_content(exchangepost2.place)
+        expect(page).to_not have_content(exchangepost1.give_item_description)
+        expect(page).to_not have_content(exchangepost1.want_item_description)
+        expect(page).to_not have_content(exchangepost3.give_item_description)
+        expect(page).to_not have_content(exchangepost3.want_item_description)
+      end
+    end
+
+    context '検索したいグッズに関する投稿がない場合' do
+      it '検索結果が表示されないこと' do
+        visit root_path
+        fill_in '欲しい', with: '僕のヒーローアカデミア'
+        click_on 'exchangeposts_search'
+        expect(page).to_not have_content('僕のヒーローアカデミア')
+        visit root_path
+        fill_in '譲りたい', with: 'ドラゴンボール'
+        click_on 'exchangeposts_search'
+        expect(page).to_not have_content('ドラゴンボール')
+        visit root_path
+        fill_in '交換場所', with: '福岡県福岡市'
+        click_on 'exchangeposts_search'
+        expect(page).to_not have_content('福岡県福岡市')
       end
     end
   end
