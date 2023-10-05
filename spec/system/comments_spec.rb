@@ -19,11 +19,11 @@ RSpec.describe 'Comments', type: :system do
           fill_in 'comment_content', with: 'テストコメント'
           expect { click_button 'コメントを送信する' }.to change(Comment, :count).by(1)
           expect(page).to have_content('投稿が完了しました')
-          within "#exchangepost-comment-#{Comment.last.id}" do
+          within "#exchangepost-comment-#{Comment.first.id}" do
             expect(page).to have_link(user.name, href: user_path(user))
-            expect(page).to have_content(Comment.last.content)
-            expect(page).to have_content(time_ago_in_words(Comment.last.created_at))
-            expect(page).to have_link('削除', href: comment_path(Comment.last))
+            expect(page).to have_content(Comment.first.content)
+            expect(page).to have_content(time_ago_in_words(Comment.first.created_at))
+            expect(page).to have_link('削除', href: comment_path(Comment.first))
           end
         end
       end

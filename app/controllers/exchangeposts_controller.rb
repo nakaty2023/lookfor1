@@ -27,7 +27,7 @@ class ExchangepostsController < ApplicationController
     @exchangepost = current_user.exchangeposts.build(exchangepost_params)
     if @exchangepost.save
       flash[:notice] = t('.success')
-      redirect_to exchangeposts_path
+      redirect_to @exchangepost
     else
       render 'exchangeposts/new', status: :unprocessable_entity
     end
@@ -35,9 +35,10 @@ class ExchangepostsController < ApplicationController
 
   def destroy
     @exchangepost = Exchangepost.find(params[:id])
+    @user = @exchangepost.user
     @exchangepost.destroy
     flash[:notice] = t('.success')
-    redirect_to exchangeposts_path, status: :see_other
+    redirect_to exchangeposts_user_path(@user), status: :see_other
   end
 
   private
