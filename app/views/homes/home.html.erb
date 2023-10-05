@@ -5,7 +5,7 @@
   <div class="row mb-5">
     <div class="col-md-10 offset-md-1 py-4">
       <div class="row">
-        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4">
+        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4" id="shop_search">
           <p class="mb-1 fw-bold">店舗名・商品名・住所で検索</p>
           <%= search_form_for @q_shops, as: :q_shops, data: { turbo: false } do |f| %>
             <div class="row mb-2">
@@ -89,8 +89,8 @@
   <div class="row mt-5">
     <div class="col-md-10 offset-md-1 py-4 mb-4">
       <div class="row">
-        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4 d-flex flex-column justify-content-center">
-          <p class="mb-2 fw-bold">欲しいor譲りたいグッズ名・交換場所で投稿を検索</p>
+        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4">
+          <p class="mb-2 fw-bold">欲しいor譲りたいグッズ名・交換場所で<br>投稿を検索</p>
           <%= search_form_for @q_exchangeposts, url:search_exchangeposts_path, class: "mb-4", as: :q_exchangeposts, data: { turbo: false } do |f| %>
             <div class="row mb-2">
               <div class="col-sm-3 col-lg-4">
@@ -122,9 +122,14 @@
             <%= f.submit '検索', class: "w-100 btn btn-primary", id: "exchangeposts_search" %>
           <% end %>
           <p class="mt-4 mb-1 fw-bold">グッズ交換に関する投稿をしてみたい</p>
-          <%= link_to "グッズ交換希望　新規投稿", new_exchangepost_path, class: 'btn btn-primary w-100 my-1' %>
+          <small class="">
+            ※事前に<%= link_to "アカウント登録", new_user_registration_path %>が必要です
+          </small>
+          <%= link_to "新規投稿", new_exchangepost_path, class: 'btn btn-primary w-100 my-1' %>
+          <p class="mt-4 mb-1 fw-bold">他ユーザーの投稿を見てみたい</p>
+          <%= link_to "グッズ交換希望投稿一覧", exchangeposts_path, class: 'btn btn-primary w-100 my-1' %>
         </div>
-        <div class="order-1 order-lg-2 col-lg-6 p-4">
+        <div class="order-1 order-lg-2 col-lg-6 p-4 d-flex flex-column justify-content-center">
           <div class="row">
             <h2 class="fw-bold text-center display-6 mb-4">グッズを交換する</h2>
             <p class="mb-0">店舗でくじを引いて欲しいキャラクターが当たらなかった時は、他のユーザーと交換してみませんか？</p>

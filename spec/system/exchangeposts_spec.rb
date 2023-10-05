@@ -8,7 +8,7 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
       before do
         login(user)
         visit root_path
-        click_on 'グッズ交換希望　新規投稿'
+        click_on '新規投稿'
         expect(current_path).to eq(new_exchangepost_path)
       end
 
@@ -61,7 +61,7 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
     context 'ログインしていない場合' do
       it 'ログインページへリダイレクトされ、投稿できないこと' do
         visit root_path
-        click_on 'グッズ交換希望　新規投稿'
+        click_on '新規投稿'
         expect(page).to have_content('ログインもしくはアカウント登録してください。')
         expect(current_path).to eq(new_user_session_path)
       end
