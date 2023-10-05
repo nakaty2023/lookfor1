@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Exchangeposts', type: :system, focus: true do
+RSpec.describe 'Exchangeposts', type: :system do
   let(:user) { create(:user, age: 25, gender: 'male') }
 
   context 'グッズ交換に関する新規投稿' do
@@ -128,9 +128,12 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
                             give_item_name: '東京リベンジャーズ', want_item_name: 'ワンピース', place: '北海道札幌市')
     end
 
+    before do
+      visit root_path
+    end
+
     context '検索したいグッズに関する投稿がある場合' do
       it '欲しいグッズ名で投稿を検索できること' do
-        visit root_path
         fill_in '欲しい', with: 'ワンピース'
         click_on 'exchangeposts_search'
         expect(page).to have_content(exchangepost1.give_item_name)
@@ -145,7 +148,6 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
       end
 
       it '譲りたいグッズ名で投稿を検索できること' do
-        visit root_path
         fill_in '譲りたい', with: 'ワンピース'
         click_on 'exchangeposts_search'
         expect(page).to have_content(exchangepost3.give_item_name)
@@ -160,7 +162,6 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
       end
 
       it '交換場所で投稿を検索できること' do
-        visit root_path
         fill_in '交換場所', with: '大阪府大阪市'
         click_on 'exchangeposts_search'
         expect(page).to have_content(exchangepost2.give_item_name)
@@ -190,6 +191,24 @@ RSpec.describe 'Exchangeposts', type: :system, focus: true do
         click_on 'exchangeposts_search'
         expect(page).to_not have_content('福岡県福岡市')
       end
+    end
+  end
+
+  context 'グッズ交換希望投稿一覧の表示' do
+    let!(:old_exchangepost) { create(:exchangepost, user:, created_at: 3.days.ago) }
+    let!(:middle_exchangepost) { create(:exchangepost, user:, created_at: 2.days.ago) }
+    let!(:new_exchangepost) { create(:exchangepost, user:, created_at: 1.day.ago) }
+
+    it '投稿日時を基準として、降順に表示されること' do
+      visit root_path
+      click_on 'グッズ交換希望投稿一覧'
+      expect(current_path).to eq(exchangeposts_path)
+      expect(page).to have_selector('div.exchangepost-list:nth-child(1)',
+                                    text: new_exchangepost.give_item_description)
+      expect(page).to have_selector('div.exchangepost-list:nth-child(2)',
+                                    text: middle_exchangepost.give_item_description)
+      expect(page).to have_selector('div.exchangepost-list:nth-child(3)',
+                                    text: old_exchangepost.give_item_description)
     end
   end
 end
