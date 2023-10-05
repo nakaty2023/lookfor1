@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:profile]
-  before_action :correct_user, only: [:profile]
+  before_action :authenticate_user!, only: :profile
+  before_action :correct_user, only: :profile
 
   def index
     @users = User.all

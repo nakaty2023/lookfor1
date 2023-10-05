@@ -1,7 +1,8 @@
-<% provide(:title, '交換希望投稿一覧') %>
-<h1 class="fs-3 fw-bold">交換希望投稿一覧</h1>
+<% provide(:title, 'グッズ交換希望投稿一覧') %>
+<h1 class="fs-3 fw-bold">グッズ交換希望投稿一覧</h1>
 <div class="row px-4">
   <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2 list-group p-0">
     <%= render partial: "shared/exchangeposts", locals: { exchangeposts: @exchangeposts } %>
   </div>
 </div>
+<%= link_to "新規投稿", new_exchangepost_path, class: 'btn btn-primary position-fixed bottom-0 end-0 m-3 rounded-pill' %>

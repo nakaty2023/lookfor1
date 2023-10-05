@@ -12,6 +12,7 @@ ja:
         want_item_name: 欲しい商品名
         want_item_description: 欲しい商品の説明
         place: 希望する交換場所
+        images: 画像
       comment:
         content: コメント内容
     enums:

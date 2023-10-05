@@ -5,8 +5,8 @@
   <div class="row mb-5">
     <div class="col-md-10 offset-md-1 py-4">
       <div class="row">
-        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4">
-          <p class="mb-1">店舗名・商品名・住所で検索</p>
+        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4" id="shop_search">
+          <p class="mb-1 fw-bold">店舗名・商品名・住所で検索</p>
           <%= search_form_for @q_shops, as: :q_shops, data: { turbo: false } do |f| %>
             <div class="row mb-2">
               <div class="col-sm-3 col-lg-4">
@@ -37,7 +37,7 @@
             </div>
             <%= f.submit '検索', class: "w-100 btn btn-primary mb-4" %>
           <% end %>
-          <p class="mt-4 mb-1">現在地で検索</p>
+          <p class="mt-4 mb-1 fw-bold">現在地で検索</p>
           <%= search_form_for @q_shops, url:search_shops_path, as: :q_shops, data: { turbo: false } do |f| %>
             <div class="row mb-2">
               <div class="col-sm-3  col-lg-4">
@@ -56,7 +56,7 @@
         <div class="order-1 order-lg-2 col-lg-6 p-4">
           <div class="row">
             <h2 class="fw-bold text-center display-6 mb-4">店舗を検索</h2>
-            <p class="mb-0">店舗名、商品名、住所のいずれかの条件で、欲しいキャラクターの一番くじを取り扱っている店舗を検索することができます。</p>
+            <p class="mb-0">店舗名、商品名、住所のいずれかの条件で、欲しいキャラクターの一番くじを取り扱っている店舗を検索することができます！</p>
             <p>現在地で検索することも可能です。</p>
             <div class="col-4 offset-4">
               <%= image_tag "search.png", alt: "Search image", class: "img-fluid" %>
@@ -72,8 +72,9 @@
         <div class="col-lg-6 mb-4 px-4 d-flex flex-column justify-content-center">
           <div class="row">
             <h2 class="fw-bold text-center display-6 mb-4">店舗について投稿</h2>
-            <p class="mb-0">実際に店舗へ行った際のくじの在庫状況など、店舗について投稿することができます。</p>
-            <p>欲しいキャラクターの在庫状況について、他のユーザーが投稿していれば、在庫状況を踏まえて店舗を探すことができます。</p>
+            <p class="mb-0">実際に店舗へ行った際のくじの在庫状況など、店舗について投稿することができます💡</p>
+            <p class="mb-0">欲しいキャラクターの在庫状況について、他のユーザーが投稿していれば、在庫状況を踏まえて店舗を探すことができます🎶</p>
+            <p>店舗に関して投稿してみたい方は、上記の検索フォームで、対象の店舗を検索してみてください！</p>
             <div class="col-4 offset-4">
               <%= image_tag "shoppost.png", alt: "Shoppost image", class: "img-fluid" %>
             </div>
@@ -88,9 +89,9 @@
   <div class="row mt-5">
     <div class="col-md-10 offset-md-1 py-4 mb-4">
       <div class="row">
-        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4 d-flex flex-column justify-content-center">
-          <p class="mb-2">欲しいor譲りたいグッズ名・交換場所で検索</p>
-          <%= search_form_for @q_exchangeposts, url:search_exchangeposts_path, as: :q_exchangeposts, data: { turbo: false } do |f| %>
+        <div class="order-2 order-lg-1 col-lg-6 px-4 my-4">
+          <p class="mb-2 fw-bold">欲しいor譲りたいグッズ名・交換場所で<br>投稿を検索</p>
+          <%= search_form_for @q_exchangeposts, url:search_exchangeposts_path, class: "mb-4", as: :q_exchangeposts, data: { turbo: false } do |f| %>
             <div class="row mb-2">
               <div class="col-sm-3 col-lg-4">
                 <i class="fa-solid fa-heart me-1" style="color: #0d6efd"></i>
@@ -118,10 +119,17 @@
                 <%= f.search_field :place_cont, class: 'form-control', placeholder: '例：東京都○○区△△△' %>
               </div>
             </div>
-            <%= f.submit '検索', class: "w-100 btn btn-primary" %>
+            <%= f.submit '検索', class: "w-100 btn btn-primary", id: "exchangeposts_search" %>
           <% end %>
+          <p class="mt-4 mb-1 fw-bold">グッズ交換に関する投稿をしてみたい</p>
+          <small class="">
+            ※事前に<%= link_to "アカウント登録", new_user_registration_path %>が必要です
+          </small>
+          <%= link_to "新規投稿", new_exchangepost_path, class: 'btn btn-primary w-100 my-1' %>
+          <p class="mt-4 mb-1 fw-bold">他ユーザーの投稿を見てみたい</p>
+          <%= link_to "グッズ交換希望投稿一覧", exchangeposts_path, class: 'btn btn-primary w-100 my-1' %>
         </div>
-        <div class="order-1 order-lg-2 col-lg-6 p-4">
+        <div class="order-1 order-lg-2 col-lg-6 p-4 d-flex flex-column justify-content-center">
           <div class="row">
             <h2 class="fw-bold text-center display-6 mb-4">グッズを交換する</h2>
             <p class="mb-0">店舗でくじを引いて欲しいキャラクターが当たらなかった時は、他のユーザーと交換してみませんか？</p>

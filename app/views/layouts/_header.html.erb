@@ -2,12 +2,18 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg bg-body-tertiary py-2">
       <div class="container-fluid">
-        <%= link_to "Look for 1", root_path, class: "fs-4 fw-bold nav-link" %>
+        <%= link_to "Look for 1", root_path(anchor: 'shop_search'), class: "fs-4 fw-bold nav-link" %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item me-2">
+              <%= link_to "店舗検索", root_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item me-2">
+              <%= link_to "グッズ交換投稿一覧", exchangeposts_path, class: "nav-link" %>
+            </li>
             <% if user_signed_in? %>
               <li class="nav-item me-2">
                 <%= link_to current_user.name, user_path(current_user), class: "nav-link" %>
@@ -18,13 +24,19 @@
                 <% end %>
                 <ul class="dropdown-menu text-small dropdown-menu-end" id="dropdownMenu" aria-labelledby="dropdownUser">
                   <li>
-                    <%= link_to "マイページ", current_user, class: "dropdown-item" %>
-                  </li>
-                  <li>
                     <%= link_to "プロフィール", profile_user_path(current_user), class: "dropdown-item" %>
                   </li>
                   <li>
-                    <%= link_to "グッズ交換の投稿", new_exchangepost_path, class: "dropdown-item" %>
+                    <%= link_to "新規投稿（グッズ交換）", new_exchangepost_path, class: "dropdown-item" %>
+                  </li>
+                  <li>
+                    <%= link_to "投稿一覧（店舗）", current_user, class: "dropdown-item" %>
+                  </li>
+                  <li>
+                    <%= link_to "投稿一覧（グッズ交換）", exchangeposts_user_path(current_user), class: "dropdown-item" %>
+                  </li>
+                  <li>
+                    <%= link_to "コメント一覧（グッズ交換)", comments_user_path(current_user), class: "dropdown-item" %>
                   </li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
@@ -33,7 +45,7 @@
                 </ul>
               </div>
             <% else %>
-              <li class="nav-item me-3">
+              <li class="nav-item me-2">
                 <%= link_to "アカウント登録", new_user_registration_path, class: "nav-link" %>
               </li>
               <li class="nav-item">

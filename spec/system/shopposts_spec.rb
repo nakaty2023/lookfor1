@@ -18,12 +18,12 @@ RSpec.describe 'Shopposts', type: :system do
         attach_file('shoppost_images', 'spec/fixtures/files/sample.jpeg')
         expect { click_button '投稿' }.to change(Shoppost, :count).by(1)
         expect(page).to have_content('投稿が完了しました')
-        within "#shop-show-shoppost-#{Shoppost.last.id}" do
+        within "#shop-show-shoppost-#{Shoppost.first.id}" do
           expect(page).to have_link(user.name, href: user_path(user))
-          expect(page).to have_content(Shoppost.last.content)
-          expect(page).to have_content(time_ago_in_words(Shoppost.last.created_at))
+          expect(page).to have_content(Shoppost.first.content)
+          expect(page).to have_content(time_ago_in_words(Shoppost.first.created_at))
           expect(page).to have_selector("img[src$='sample.jpeg']")
-          expect(page).to have_link('削除', href: shoppost_path(Shoppost.last))
+          expect(page).to have_link('削除', href: shoppost_path(Shoppost.first))
         end
       end
     end
