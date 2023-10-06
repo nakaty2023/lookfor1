@@ -64,7 +64,7 @@
     <hr>
     <div class="row py-4 m-0">
       <h2 class="text-center mb-4">店舗に関する新規投稿</h2>
-      <%= form_with model: @shoppost, data: { turbo: false } do |f| %>
+      <%= form_with model: @shoppost do |f| %>
         <%= render "shared/error_messages", resource: @shoppost %>
         <div class="mb-3">
           <%= f.hidden_field :shop_id, value: @shop.id %><br>
