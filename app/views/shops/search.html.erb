@@ -1,63 +1,83 @@
-<% provide(:title, '店舗一覧') %>
-<h1 class="fs-3 fw-bold">店舗一覧</h1>
-
-<div class="row">
-  <div class="col-md-8 offset-md-2">
-    <div id="map" style="width: 100%; height: 500px;"></div>
+<% provide(:title, '店舗検索結果') %>
+<h1 class="fs-3 fw-bold">店舗検索結果</h1>
+<div class="row mb-4">
+  <div class="col-md-10 offset-md-1">
+    <div id="map" style="width: 100%; height: 600px;"></div>
     <script>
-      window.shopsData = <%= raw @shops.to_json(
-        only: [:id, :name, :address, :lat, :lon],
-        include: { items: { only: [:name] } }
-      ) %>;
+      function initMap() {
+        const userPosition = {
+          lat: <%= @user_latitude %>,
+          lng: <%= @user_longitude %>
+        };
 
-      document.addEventListener('turbo:load', function() {
-        var mapElement = document.getElementById('map');
-        if (mapElement) {
-          var userLatitude = <%= @user_latitude.present? ? @user_latitude : 'null' %>;
-          var userLongitude = <%= @user_longitude.present? ? @user_longitude : 'null' %>;
+        const shops = [
+          <% @shops.map do |shop| %>
+            {
+              id: <%= shop.id %>,
+              position: { lat: <%= shop.lat %>, lng: <%= shop.lon %> },
+              name: "<%= j shop.name %>",
+              address: "<%= j shop.address %>",
+              items: [<%= raw shop.items.map { |item| "'#{j item.name}'" }.join(", ") %>]
+            },
+          <% end.join(",\n") %>
+        ];
 
-          const initialView = (userLatitude && userLongitude) ? [userLatitude, userLongitude] : [shopsData[0].lat, shopsData[0].lon];
-          const map = L.map('map').setView(initialView, 14);
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: userPosition,
+          zoom: 13,
+        });
 
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-          }).addTo(map);
+        const userIcon = {
+          url: '<%= asset_path 'person-solid.svg' %>',
+          scaledSize: new google.maps.Size(35, 35)
+        };
 
-          var userIcon = L.icon({
-            iconUrl: '<%= asset_path 'person-solid.svg' %>',
-            iconSize: [32, 32],
+        new google.maps.Marker({
+          position: userPosition,
+          map: map,
+          title: "現在地",
+          icon: userIcon
+        });
+
+        let currentInfoWindow;
+
+        shops.forEach(shop => {
+          const marker = new google.maps.Marker({
+            position: shop.position,
+            map: map,
+            title: shop.name,
           });
 
-          if (userLatitude && userLongitude) {
-            L.marker([userLatitude, userLongitude], {icon: userIcon}).addTo(map);
-          }
+          const itemsList = shop.items.map(item => `<li>${item}</li>`).join("");
 
-          window.shopsData.forEach(shop => {
-            let itemsList = '<strong>取扱商品</strong><br>';
-            shop.items.forEach(item => {
-              itemsList += `・${item.name}<br>`;
-            });
-
-            let routeLink = '';
-            if (userLatitude && userLongitude) {
-              routeLink = `<a href="https://www.google.com/maps/dir/?api=1&destination=${shop.lat},${shop.lon}" class="mb-1" target="_blank" rel="noopener noreferrer">
-                            <i class="fa-solid fa-route me-1"></i>現在地からのルート
-                          </a><br>`;
-            }
-
-            L.marker([shop.lat, shop.lon]).addTo(map).bindPopup(
-              `<a href="/shops/${shop.id}">${shop.name}</a><br>
-              <span class="mb-1">${shop.address}</span><br>
-              <span class="mb-1">${itemsList}</span><br>
-              ${routeLink}
+          const infoWindow = new google.maps.InfoWindow({
+            content: `
+              <a href="/shops/${shop.id}">${shop.name}</a><br>
+              <span>${shop.address}</span>
+              <div class="mt-1">
+                <span class="mt-1"><取扱商品></span><ul>${itemsList}</ul>
+              </div>
+              <a href="https://www.google.com/maps/dir/current+location/${shop.address}" target="_blank">
+                <i class="fa-solid fa-route me-1"></i>現在地からのルート
+              </a><br>
               <a href="/shops/${shop.id}">
                 <i class="fa-regular fa-comments me-1"></i>店舗に関する投稿
-              </a>`
-            );
+              </a>
+            `
           });
-        }
-      });
+
+          marker.addListener("click", () => {
+            if (currentInfoWindow) {
+              currentInfoWindow.close();
+            }
+            infoWindow.open(map, marker);
+            currentInfoWindow = infoWindow;
+          });
+        });
+      }
+
+      window.initMap = initMap;
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap"></script>
   </div>
 </div>
