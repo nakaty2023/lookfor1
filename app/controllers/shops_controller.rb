@@ -2,13 +2,24 @@ class ShopsController < ApplicationController
   before_action :ensure_location_present, only: :search
 
   def index
+    if params[:q_shops].blank? ||
+       (params[:q_shops][:name_cont].blank? &&
+        params[:q_shops][:items_name_cont].blank? &&
+        params[:q_shops][:address_cont].blank?)
+
+      flash[:alert] = 'いずれかの入力フォームに、検索条件を入力してください'
+      redirect_to root_path
+      return
+    end
     @q = Shop.ransack(params[:q_shops])
     @shops = @q.result(distinct: true).includes(:items).limit(10)
+    flash.now[:alert] = '店舗が見つかりませんでした' if @shops.empty?
   end
 
   def search
     @q = Shop.ransack(params[:q_shops])
     @shops = @q.result(distinct: true).includes(:items).near([@user_latitude, @user_longitude], 5).limit(10)
+    flash.now[:alert] = '店舗が見つかりませんでした' if @shops.empty?
   end
 
   def show
