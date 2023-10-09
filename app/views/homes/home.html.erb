@@ -8,7 +8,7 @@
       <div class="row">
         <div class="order-2 order-lg-1 col-lg-6 px-4 my-4">
           <p class="mb-1 fw-bold">店舗名・商品名・住所で検索</p>
-          <%= search_form_for @q_shops, as: :q_shops, data: { turbo: false } do |f| %>
+          <%= search_form_for @q_shops, as: :q_shops, data: { turbo: false }, class: "search-form" do |f| %>
             <div class="row mb-2">
               <div class="col-sm-3 col-lg-4">
                 <i class="fa-solid fa-shop me-1" style="color: #0d6efd"></i>
@@ -36,7 +36,7 @@
                 <%= f.search_field :address_cont, class: 'form-control', placeholder: '例：○○県○○市' %>
               </div>
             </div>
-            <%= f.submit '検索', class: "w-100 btn btn-primary mb-4" %>
+            <%= f.submit '検索', class: "w-100 btn btn-primary mb-4", id: "shops_search" %>
           <% end %>
           <p class="mt-4 mb-1 fw-bold">現在地で検索</p>
           <%= search_form_for @q_shops, url:search_shops_path, as: :q_shops, data: { turbo: false } do |f| %>
