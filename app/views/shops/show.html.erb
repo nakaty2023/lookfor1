@@ -29,25 +29,48 @@
     </table>
     <div id="shop-detail-map" style="width: 100%; height: 400px;" class="mb-5"></div>
     <script>
-      document.addEventListener('turbo:load', function() {
-        var mapElement = document.getElementById('shop-detail-map');
-        if (mapElement) {
-          if (window.shopMap) {
-            window.shopMap.remove();
-          }
-          window.shopMap = L.map('shop-detail-map').setView([<%= @shop.lat %>, <%= @shop.lon %>], 15);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          }).addTo(window.shopMap);
-          L.marker([<%= @shop.lat %>, <%= @shop.lon %>]).addTo(window.shopMap)
-            .bindPopup('<%= @shop.name %><br><%= @shop.address %>').openPopup();
-        }
-      });
+      function initMap() {
+        const shop = {
+          position: { lat: <%= @shop.lat %>, lng: <%= @shop.lon %> },
+          name: "<%= j @shop.name %>",
+          address: "<%= j @shop.address %>",
+        };
+
+        const map = new google.maps.Map(document.getElementById("shop-detail-map"), {
+          center: shop.position,
+          zoom: 15,
+        });
+
+        const marker = new google.maps.Marker({
+          position: shop.position,
+          map: map,
+          title: shop.name,
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+          content: `
+            <p class="mb-0">${shop.name}</p>
+            <span>${shop.address}</span><br>
+            <a href="https://www.google.com/maps/dir/current+location/${shop.address}" target="_blank">
+              <i class="fa-solid fa-route me-1"></i>現在地からのルート
+            </a>
+          `
+        });
+
+        marker.addListener("click", () => {
+          infoWindow.open(map, marker);
+        });
+
+        infoWindow.open(map, marker);
+      }
+
+      window.initMap = initMap;
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap"></script>
     <hr>
     <div class="row py-4 m-0">
       <h2 class="text-center mb-4">店舗に関する新規投稿</h2>
-      <%= form_with model: @shoppost, data: { turbo: false } do |f| %>
+      <%= form_with model: @shoppost do |f| %>
         <%= render "shared/error_messages", resource: @shoppost %>
         <div class="mb-3">
           <%= f.hidden_field :shop_id, value: @shop.id %><br>
