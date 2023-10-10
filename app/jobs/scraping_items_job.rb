@@ -14,3 +14,7 @@ class ScrapingItemsJob < ApplicationJob
     Rails.logger.info 'ScrapingItemsJob finished'
   end
 end
+
+# 実行方法
+# railsコンソールで下記コマンドを実行
+# ScrapingItemsJob.perform_now
