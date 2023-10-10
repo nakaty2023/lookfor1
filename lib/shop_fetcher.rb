@@ -9,14 +9,14 @@ def shop_fetcher
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--window-size=1280x800')
   ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ' \
-      'AppleWebKit/537.36 (KHTML, like Gecko) ' \
-      'Chrome/115.0.0.0 Safari/537.36'
+       'AppleWebKit/537.36 (KHTML, like Gecko) ' \
+       'Chrome/115.0.0.0 Safari/537.36'
   options.add_argument("--user-agent=#{ua}")
 
   driver = Selenium::WebDriver.for(
     :remote,
-    url: ENV['SELENIUM_REMOTE_URL'],
-    options: options
+    url: ENV.fetch('SELENIUM_REMOTE_URL', nil),
+    options:
   )
 
   # 外部サイトにアクセス
