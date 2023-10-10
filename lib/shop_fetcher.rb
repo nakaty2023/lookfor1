@@ -9,12 +9,15 @@ def shop_fetcher
   options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--window-size=1280x800')
   ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ' \
-       'AppleWebKit/537.36 (KHTML, like Gecko) ' \
-       'Chrome/115.0.0.0 Safari/537.36'
+      'AppleWebKit/537.36 (KHTML, like Gecko) ' \
+      'Chrome/115.0.0.0 Safari/537.36'
   options.add_argument("--user-agent=#{ua}")
 
-  # ブラウザのインスタンスを開始 (オプションを使用)
-  driver = Selenium::WebDriver.for(:chrome, options:)
+  driver = Selenium::WebDriver.for(
+    :remote,
+    url: ENV['SELENIUM_REMOTE_URL'],
+    options: options
+  )
 
   # 外部サイトにアクセス
   driver.navigate.to 'https://1kuji.com/shop_lists'
@@ -27,9 +30,9 @@ def shop_fetcher
   product_element = Selenium::WebDriver::Support::Select.new(product_dropdown)
   product_options = product_element.options.reject { |option| option.attribute('value') == 'null' }
 
-  selected_product_options = product_options[0..4] # テストのためのコード
+  selected_product_options = product_options[0...8] + product_options[9..]
 
-  selected_product_options.each do |product_option| # テストのための修正
+  selected_product_options.each do |product_option|
     product_name = product_option.text.sub('一番くじ ', '')
     @product = Item.find_by(name: product_name)
     product_option.click
@@ -40,9 +43,9 @@ def shop_fetcher
     pref_element = Selenium::WebDriver::Support::Select.new(pref_dropdown)
     pref_options = pref_element.options.select { |option| option.attribute('value') }
 
-    selected_pref_options = pref_options[44..45] # テストのためのコード
+    selected_pref_options = [pref_options[13], pref_options[47]]
 
-    selected_pref_options.each do |pref_option| # テストのための修正
+    selected_pref_options.each do |pref_option|
       pref_option.click
       sleep 1
 
@@ -52,7 +55,7 @@ def shop_fetcher
       city_element = Selenium::WebDriver::Support::Select.new(city_dropdown)
       city_options = city_element.options.reject { |option| option.attribute('value') == 'null' }
 
-      selected_city_options = city_options[0..1] # テストのためのコード
+      selected_city_options = city_options[0..1]
 
       selected_city_options.each do |city_option|
         city_option.click
@@ -105,6 +108,7 @@ def shop_fetcher
   old_shopitems = current_shopitems - @scraped_shopitems
 
   # 削除対象データ等を取得できているかどうか確認
+  # puts @shops
   # puts old_shopitems
   # puts current_shopitems
   # puts @scraped_shopitems
@@ -117,3 +121,8 @@ def shop_fetcher
   # ブラウザを閉じる
   driver.quit
 end
+
+# 実行方法
+# railsコンソールで下記コマンドを実行
+# require_relative 'lib/shop_fetcher'
+# shop_fetcher

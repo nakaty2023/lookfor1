@@ -47,3 +47,13 @@ services:
           nocopy: true
     depends_on:
       - ${DB_HOST}
+    environment:
+      - SELENIUM_REMOTE_URL=http://selenium:4444/wd/hub
+
+  selenium:
+    image: seleniarm/standalone-chromium
+    ports:
+      - 4444:4444
+      - 7900:7900
+    shm_size: "2gb"
+    tty: true
