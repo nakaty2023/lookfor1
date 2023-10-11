@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Shops', type: :system, js: true, focus: true do
+RSpec.describe 'Shops', type: :system, js: true do
   let(:user) { create(:user, age: 25, gender: 'male') }
 
   context '店舗の検索' do
