@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :convert_gender_to_integer, only: %i[create update]
   before_action :configure_sign_up_params, only: :create
   before_action :configure_account_update_params, only: :update
-  before_action :ensure_normal_user, only: :destroy
+  before_action :ensure_normal_user, only: %i[edit update destroy]
 
   # GET /resource/sign_up
   # def new
@@ -65,7 +65,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def ensure_normal_user
     return unless resource.email == 'guest@example.com'
 
-    redirect_to root_path, alert: 'ゲストユーザーは削除できません。'
+    redirect_to root_path, alert: 'ゲストユーザーの更新・削除はできません。'
   end
 
   # The path used after sign up for inactive accounts.
