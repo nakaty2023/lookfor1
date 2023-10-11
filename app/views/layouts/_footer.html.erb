@@ -1,13 +1,12 @@
-<footer class="footer">
-  <small>
-    The <a href="/">Look For 1</a>
-    by <a href="#">nakaty2023</a>
-  </small>
-  <nav>
-    <ul>
-      <li><%= link_to "Home", '#' %></li>
-      <li><%= link_to "About",   '#' %></li>
-      <li><%= link_to "Contact", '#' %></li>
-    </ul>
-  </nav>
+<footer class="footer border-top">
+  <div class="container pt-2">
+    <small>
+      © <%= link_to "Look For 1", root_path %>
+      by nakaty2023
+    </small><br>
+    <small>
+      当サイト上で使用しているグッズ画像等の引用元：
+      <%= link_to "一番くじ倶楽部", 'https://1kuji.com/', target: :_blank %>
+    </small>
+  </div>
 </footer>
