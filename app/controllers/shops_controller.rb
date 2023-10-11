@@ -12,13 +12,13 @@ class ShopsController < ApplicationController
       return
     end
     @q = Shop.ransack(params[:q_shops])
-    @shops = @q.result(distinct: true).includes(:items).limit(10)
+    @shops = @q.result(distinct: true).includes(:items).limit(100)
     flash.now[:alert] = '店舗が見つかりませんでした' if @shops.empty?
   end
 
   def search
     @q = Shop.ransack(params[:q_shops])
-    @shops = @q.result(distinct: true).includes(:items).near([@user_latitude, @user_longitude], 5).limit(10)
+    @shops = @q.result(distinct: true).includes(:items).near([@user_latitude, @user_longitude], 5).limit(100)
     flash.now[:alert] = '店舗が見つかりませんでした' if @shops.empty?
   end
 

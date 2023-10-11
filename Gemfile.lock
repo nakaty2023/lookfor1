@@ -167,10 +167,6 @@ GEM
       thor (>= 0.14, < 2.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
-    leaflet-markercluster-rails (0.7.0)
-      railties (>= 3.1)
-    leaflet-rails (1.9.3)
-      rails (>= 4.2.0)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -375,8 +371,6 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jquery-rails
-  leaflet-markercluster-rails
-  leaflet-rails
   nokogiri
   pg
   puma (~> 5.0)

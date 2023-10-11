@@ -79,18 +79,43 @@ RSpec.describe 'UsersRegistrations', type: :system do
         expect(current_path).to eq(new_user_session_path)
       end
     end
+
+    context 'ゲストユーザーが編集しようとした場合' do
+      it 'プロフィール編集ページへアクセスできず、トップページにリダイレクトされること' do
+        visit root_path
+        click_on 'ゲストログイン'
+        visit edit_user_registration_path
+        expect(page).to have_content('ゲストユーザーの更新・削除はできません。')
+        expect(current_path).to eq(root_path)
+      end
+    end
   end
 
   context 'ユーザー削除' do
-    let(:user) { create(:user) }
-    it 'users/showのアカウント削除ボタンを押すとユーザーが削除され、トップページにリダイレクトされること' do
-      login(user)
-      expect do
-        click_on 'アカウント削除'
-        expect(page).to have_content('アカウントを削除しました。またのご利用をお待ちしております。')
+    context '通常ユーザーの場合' do
+      let(:user) { create(:user) }
+      it 'users/showのアカウント削除ボタンを押すとユーザーが削除され、トップページにリダイレクトされること' do
+        login(user)
+        expect do
+          click_on 'アカウント削除'
+          expect(page).to have_content('アカウントを削除しました。またのご利用をお待ちしております。')
+          expect(current_path).to eq(root_path)
+          expect(page).to_not have_content(user.name)
+        end.to change(User, :count).by(-1)
+      end
+    end
+
+    context 'ゲストユーザーの場合' do
+      it 'users/showのアカウント削除ボタンを押してもユーザーが削除されず、トップページにリダイレクトされること' do
+        visit root_path
+        click_on 'ゲストログイン'
         expect(current_path).to eq(root_path)
-        expect(page).to_not have_content(user.name)
-      end.to change(User, :count).by(-1)
+        click_on 'ゲスト'
+        expect(current_path).to eq(user_path(User.find_by(name: 'ゲスト')))
+        click_on 'アカウント削除'
+        expect(page).to have_content('ゲストユーザーの更新・削除はできません。')
+        expect(current_path).to eq(root_path)
+      end
     end
   end
 end

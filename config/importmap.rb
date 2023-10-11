@@ -7,6 +7,5 @@ pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js', preload: true
 pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin '@popperjs/core', to: 'popper.js', preload: true
 pin 'bootstrap', to: 'bootstrap.min.js', preload: true
-pin 'leaflet', to: 'leaflet/dist/leaflet.js', preload: true
 pin_all_from 'app/javascript/custom', under: 'custom'
 pin '@fortawesome/fontawesome-free', to: 'https://ga.jspm.io/npm:@fortawesome/fontawesome-free@6.4.2/js/all.js'

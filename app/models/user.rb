@@ -30,4 +30,11 @@ class User < ApplicationRecord
   def self.human_attribute_enum_value(attr_name, key)
     I18n.t("activerecord.enums.#{model_name.i18n_key}.#{attr_name}.#{key}")
   end
+
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = 'ゲスト'
+    end
+  end
 end

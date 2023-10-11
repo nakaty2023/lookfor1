@@ -1,2 +1,0 @@
-class Municipality < ApplicationRecord
-end

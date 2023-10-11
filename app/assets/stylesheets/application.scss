@@ -1,5 +1,4 @@
 @import "bootstrap";
-@import "leaflet";
 
 /* universal */
 
@@ -25,7 +24,12 @@ textarea {
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1;
 }
 
@@ -52,8 +56,6 @@ p {
 
 footer {
   margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
   color: #777;
 }
 
@@ -66,17 +68,7 @@ footer a:hover {
 }
 
 footer small {
-  float: left;
-}
-
-footer ul {
   float: right;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 15px;
 }
 
 /* miscellaneous */
@@ -126,7 +118,8 @@ aside {
 /* user */
 /* user-form */
 
-.user-registrations-form-control, .user-registrations-form-label  {
+.user-registrations-form-control,
+.user-registrations-form-label {
   margin-bottom: 0;
 }
 
@@ -143,7 +136,8 @@ aside {
 }
 
 #error_explanation {
-  i, h2 {
+  i,
+  h2 {
     font-size: 16px;
   }
   ul {
@@ -163,7 +157,8 @@ aside {
 
 @media screen and (max-width: 767px) {
   .user-show-wrapper {
-    h1,.user-age-gender {
+    h1,
+    .user-age-gender {
       text-align: center !important;
     }
     h1 {
@@ -244,7 +239,8 @@ aside {
   opacity: 0.2;
 }
 
-.exchangepost-give, .exchangepost-want {
+.exchangepost-give,
+.exchangepost-want {
   p {
     font-size: 20px;
   }

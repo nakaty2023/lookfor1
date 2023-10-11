@@ -26,6 +26,17 @@ RSpec.describe 'UserSessions', type: :system do
     end
   end
 
+  context 'ゲストログイン' do
+    it 'ログインし、トップページへリダイレクトされること' do
+      visit root_path
+      click_on 'ゲストログイン'
+      expect(page).to have_content('ゲストユーザーとしてログインしました。')
+      expect(current_path).to eq(root_path)
+      expect(page).to have_link('ゲスト', href: user_path(User.find_by(name: 'ゲスト')))
+      expect(page).to_not have_link('ログイン')
+    end
+  end
+
   context 'ログアウト' do
     it 'ログアウトできること' do
       login(user)
