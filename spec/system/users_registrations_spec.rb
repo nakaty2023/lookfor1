@@ -82,15 +82,29 @@ RSpec.describe 'UsersRegistrations', type: :system do
   end
 
   context 'ユーザー削除' do
-    let(:user) { create(:user) }
-    it 'users/showのアカウント削除ボタンを押すとユーザーが削除され、トップページにリダイレクトされること' do
-      login(user)
-      expect do
-        click_on 'アカウント削除'
-        expect(page).to have_content('アカウントを削除しました。またのご利用をお待ちしております。')
+    context '通常ユーザーの場合' do
+      let(:user) { create(:user) }
+      it 'users/showのアカウント削除ボタンを押すとユーザーが削除され、トップページにリダイレクトされること' do
+        login(user)
+        expect do
+          click_on 'アカウント削除'
+          expect(page).to have_content('アカウントを削除しました。またのご利用をお待ちしております。')
+          expect(current_path).to eq(root_path)
+          expect(page).to_not have_content(user.name)
+        end.to change(User, :count).by(-1)
+      end
+    end
+
+    context 'ゲストユーザーの場合', focus: true do
+      it 'users/showのアカウント削除ボタンを押してもユーザーが削除されず、トップページにリダイレクトされること' do
+        visit root_path
+        click_on 'ゲストログイン'
         expect(current_path).to eq(root_path)
-        expect(page).to_not have_content(user.name)
-      end.to change(User, :count).by(-1)
+        click_on 'ゲスト'
+        expect(current_path).to eq(user_path(User.find_by(name: 'ゲスト')))
+        click_on 'アカウント削除'
+        expect(page).to have_content('ゲストユーザーは削除できません。')
+      end
     end
   end
 end
