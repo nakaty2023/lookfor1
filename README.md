@@ -30,11 +30,12 @@ Webエンジニアとして働き、スキルを磨くことで、多くの人�
 ## 学習中の言語・技術
 - `Linux`
 - `HTML, CSS, JavaScript`
-- `Ruby, Ruby on Rails`
-- `Git, GitHub, GitHub Actions`
 - `SQL(PostgreSQL)`
+- `Ruby, Ruby on Rails`
+- `Docker`
+- `nginx`
+- `Git, GitHub, GitHub Actions`
 - `AWS`
-- `Docker, nginx`
 
 2023/5/20から学習開始\
 2023/10/12までの総学習時間887時間
@@ -73,6 +74,8 @@ Webエンジニアとして働き、スキルを磨くことで、多くの人�
 - `ポートフォリオ作成`\
 期間：7/8〜10/12　時間：404H
 
+※上記は2023/10/12までの記録です。
+
 ## 連絡先
 - Twitter: [@nakaty2023](https://twitter.com/nakaty2023)
 
@@ -102,7 +105,7 @@ https://lookfor1.site
 ![インフラ構成図](app/assets/images/infrastructure_diagram.png)
 
 ## ER図
-
+![ER図](app/assets/images/erd.png)
 
 ## 機能一覧
 - アカウント登録/削除機能
