@@ -99,7 +99,7 @@ Look for 1\
 https://lookfor1.site
 
 ## インフラ構成図
-
+![インフラ構成図](app/assets/images/infrastructure_diagram.png)
 
 ## ER図
 
