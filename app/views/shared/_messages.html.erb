@@ -1,0 +1,52 @@
+<div class="card message-wrapper">
+  <div class="card-header">
+    <%= image_tag recipient.display_image, class: "rounded-circle", width: "40" %>
+    <%= link_to recipient.name, user_path(recipient) %>
+  </div>
+  <div class="card-body">
+    <% messages.each do |message| %>
+      <div class="row mb-3">
+        <% if message.user == current_user %>
+          <div class="col-2 col-lg-1 px-2">
+            <%= image_tag message.user.display_image, class: "rounded-circle w-100" %>
+          </div>
+          <div class="col-10 col-lg-11">
+            <span>
+              <%= link_to message.user.name, user_path(message.user), class: "message-user-link" %>
+            </span>
+            <p class="bg-light px-4 py-2 mb-1"><%= message.body %></p>
+            <div class="exchangepost-time text-end">
+              <%= l message.created_at, format: :long %>
+              <%= link_to message, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
+                <i class="fas fa-trash-alt me-1"></i>削除
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="col-10 col-lg-11">
+            <div class="text-end">
+              <span>
+                <%= link_to recipient.name, user_path(recipient), class: "message-user-link" %>
+              </span>
+            </div>
+            <p class="bg-light px-4 py-2 mb-1"><%= message.body %></p>
+            <div class="exchangepost-time"><%= l message.created_at, format: :long %></div>
+          </div>
+          <div class="col-2 col-lg-1 px-2">
+            <%= image_tag recipient.display_image, class: "rounded-circle w-100" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-footer">
+    <%= form_with model: [conversation, message] do |f| %>
+      <div class="input-group">
+        <%= f.text_area :body, class: 'form-control auto-expand', placeholder: 'メッセージを入力', rows: '1' %>
+        <div class="input-group-append ms-1">
+          <%= f.submit '送信', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

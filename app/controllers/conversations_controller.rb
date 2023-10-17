@@ -1,12 +1,15 @@
 class ConversationsController < ApplicationController
-  before_action :authenticate_user!, only: :show
+  before_action :authenticate_user!, only: %i[index show create]
   before_action :correct_user, only: :show
+  before_action :load_conversations, only: %i[index show]
+  before_action :check_conversations, only: :index
 
   def index
-    @conversations = Conversation.where('sender_id = ? OR recipient_id = ?', current_user.id, current_user.id)
+    load_users_from_conversations
   end
 
   def show
+    load_users_from_conversations
     @recipient = User.find(@conversation.recipient_user_id(current_user.id))
     @message = Message.new
     @messages = @conversation.messages.includes(:user)
@@ -29,5 +32,20 @@ class ConversationsController < ApplicationController
 
     flash[:alert] = t('.failure')
     redirect_to root_path
+  end
+
+  def check_conversations
+    return unless @conversations.empty?
+
+    redirect_to user_path(current_user), notice: 'DM送信履歴がありません'
+  end
+
+  def load_conversations
+    @conversations = Conversation.where('sender_id = ? OR recipient_id = ?', current_user.id, current_user.id)
+  end
+
+  def load_users_from_conversations
+    other_user_ids = @conversations.map { |conversation| conversation.recipient_user_id(current_user.id) }
+    @users = User.where(id: other_user_ids).includes(image_attachment: :blob)
   end
 end
