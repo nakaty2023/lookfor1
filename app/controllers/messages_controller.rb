@@ -10,9 +10,9 @@ class MessagesController < ApplicationController
     @message = @conversation.messages.new(message_params)
     @message.user = current_user
     if @message.save
-      redirect_to conversation_messages_path(@conversation)
+      redirect_to conversation_path(@conversation)
     else
-      render :index
+      render :show
     end
   end
 
