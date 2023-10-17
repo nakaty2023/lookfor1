@@ -14,7 +14,7 @@
             <span>
               <%= link_to message.user.name, user_path(message.user), class: "message-user-link" %>
             </span>
-            <p class="bg-light px-4 py-2 mb-1"><%= message.body %></p>
+            <p class="bg-light px-4 py-2 mb-1"><%= safe_join(message.body.split("\n"),tag(:br)) %></p>
             <div class="exchangepost-time text-end">
               <%= l message.created_at, format: :long %>
               <%= link_to message, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
