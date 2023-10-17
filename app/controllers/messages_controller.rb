@@ -1,11 +1,6 @@
 class MessagesController < ApplicationController
   before_action :find_conversation
 
-  def index
-    @messages = @conversation.messages
-    @message = @conversation.messages.new
-  end
-
   def create
     @message = @conversation.messages.new(message_params)
     @message.user = current_user

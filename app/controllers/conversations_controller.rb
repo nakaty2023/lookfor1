@@ -9,6 +9,7 @@ class ConversationsController < ApplicationController
   def show
     @recipient = User.find(@conversation.recipient_user_id(current_user.id))
     @message = Message.new
+    @messages = @conversation.messages.includes(:user)
   end
 
   def create

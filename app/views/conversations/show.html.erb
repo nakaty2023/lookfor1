@@ -19,16 +19,35 @@
           <%= @recipient.name %>
         </div>
         <div class="card-body">
-          <!-- チャットのメッセージをここに追加 -->
-          <% @conversation.messages.each do |message| %>
-            <p><%= message.body %></p>
+          <% @messages.each do |message| %>
+            <div class="row mb-3 message-wrapper">
+              <% if message.user == current_user %>
+                <div class="col-md-1 px-2">
+                  <%= image_tag message.user.display_image, class: "rounded-circle w-100" %>
+                </div>
+                <div class="col-md-11">
+                  <span>
+                    <%= link_to message.user.name, user_path(message.user), class: "message-user-link" %>
+                  </span>
+                  <p class="bg-light px-4 py-2 mb-1"><%= message.body %></p>
+                  <div class="exchangepost-time text-end"><%= l message.created_at, format: :long %></div>
+                </div>
+              <% else %>
+                <div class="col-md-11">
+                  <div class="text-end">
+                    <span>
+                      <%= link_to @recipient.name, user_path(@recipient), class: "message-user-link" %>
+                    </span>
+                  </div>
+                  <p class="bg-light px-4 py-2 mb-1"><%= message.body %></p>
+                  <div class="exchangepost-time"><%= l message.created_at, format: :long %></div>
+                </div>
+                <div class="col-md-1 px-2">
+                  <%= image_tag @recipient.display_image, class: "rounded-circle w-100" %>
+                </div>
+              <% end %>
+            </div>
           <% end %>
-          <p class="text-right">
-            送信されたメッセージ
-          </p>
-          <p>
-            受信したメッセージ
-          </p>
         </div>
         <div class="card-footer">
           <%= form_with model: [@conversation, @message] do |f| %>

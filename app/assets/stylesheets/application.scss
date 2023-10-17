@@ -295,3 +295,16 @@ aside {
 .top-wrapper {
   margin-bottom: 200px;
 }
+
+.message-wrapper {
+  span {
+    font-size: 13px;
+  }
+  a {
+    text-decoration: none;
+    color: #222;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
