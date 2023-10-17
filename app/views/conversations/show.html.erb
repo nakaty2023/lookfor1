@@ -1,0 +1,41 @@
+<% provide(:title, 'DM') %>
+<div class="p-4">
+  <h1 class="fs-3 fw-bold">DM</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="list-group">
+        <!-- ここにメッセージのリスト -->
+        <a href="#" class="list-group-item list-group-item-action">
+          <%= image_tag @recipient.display_image, class: "rounded-circle", width: "40" %>
+          <%= @recipient.name %>
+        </a>
+        <!-- 他のメッセージも同様に追加 -->
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <%= image_tag @recipient.display_image, class: "rounded-circle", width: "40" %>
+          <%= @recipient.name %>
+        </div>
+        <div class="card-body">
+          <!-- チャットのメッセージをここに追加 -->
+          <p class="text-right">
+            送信されたメッセージ
+          </p>
+          <p>
+            受信したメッセージ
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="メッセージを入力">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">送信</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

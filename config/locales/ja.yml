@@ -225,4 +225,6 @@ ja:
       success: '投稿が完了しました'
     destroy:
       success: 'コメントを削除しました'
-
+  conversations:
+    show:
+      failure: 'アクセス権限がありません'

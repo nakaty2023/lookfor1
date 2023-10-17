@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @shopposts = @user.shopposts.includes(:shop, { images_attachments: :blob })
+    @conversation = Conversation.new
   end
 
   def profile
@@ -18,11 +19,13 @@ class UsersController < ApplicationController
   def comments
     @user = User.find(params[:id])
     @comments = @user.comments.includes(exchangepost: :user)
+    @conversation = Conversation.new
   end
 
   def exchangeposts
     @user = User.find(params[:id])
     @exchangeposts = @user.exchangeposts.includes({ images_attachments: :blob })
+    @conversation = Conversation.new
   end
 
   private

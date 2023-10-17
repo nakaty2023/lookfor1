@@ -9,6 +9,14 @@ class Conversation < ApplicationRecord
       '(conversations.sender_id = ? AND conversations.recipient_id = ?) OR ' \
       '(conversations.sender_id = ? AND conversations.recipient_id = ?)',
       sender_id, recipient_id, recipient_id, sender_id
-    ).first_or_create
+    ).first_or_create(sender_id:, recipient_id:)
+  end
+
+  def recipient_user_id(current_user_id)
+    if sender_id == current_user_id
+      recipient_id
+    else
+      sender_id
+    end
   end
 end

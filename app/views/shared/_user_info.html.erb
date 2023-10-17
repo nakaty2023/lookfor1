@@ -18,6 +18,12 @@
       <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-outline-primary btn-sm my-1' %>
       <%= link_to "プロフィール詳細", profile_user_path, class: 'btn btn-outline-primary btn-sm my-1' %>
       <%= link_to "アカウント削除", users_path, method: :delete, data: { turbo_method: :delete }, class: 'btn btn-danger btn-sm my-1' %>
+    <% elsif current_user %>
+      <%= form_with model: conversation do |f| %>
+        <%= f.hidden_field :sender_id, value: current_user.id %>
+        <%= f.hidden_field :recipient_id, value: user.id %>
+        <%= f.submit "DMを送る", class: "btn btn-outline-primary btn-sm w-100" %>
+      <% end %>
     <% end %>
   </div>
 </div>
