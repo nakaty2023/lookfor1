@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.new(message_params)
@@ -6,7 +8,10 @@ class MessagesController < ApplicationController
     if @message.save
       redirect_to conversation_path(@conversation)
     else
-      render :show
+      load_users_from_conversations
+      @recipient = User.find(@conversation.recipient_user_id(current_user.id))
+      @messages = @conversation.messages.includes(:user)
+      render 'conversations/show', status: :unprocessable_entity
     end
   end
 
@@ -22,5 +27,11 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:body)
+  end
+
+  def load_users_from_conversations
+    @conversations = Conversation.where('sender_id = ? OR recipient_id = ?', current_user.id, current_user.id)
+    other_user_ids = @conversations.map { |conversation| conversation.recipient_user_id(current_user.id) }
+    @users = User.where(id: other_user_ids).includes(image_attachment: :blob)
   end
 end

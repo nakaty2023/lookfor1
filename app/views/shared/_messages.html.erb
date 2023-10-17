@@ -41,6 +41,7 @@
   </div>
   <div class="card-footer">
     <%= form_with model: [conversation, message] do |f| %>
+      <%= render "shared/error_messages", resource: message %>
       <div class="input-group">
         <%= f.text_area :body, class: 'form-control auto-expand', placeholder: 'メッセージを入力', rows: '1' %>
         <div class="input-group-append ms-1">
