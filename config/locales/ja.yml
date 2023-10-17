@@ -228,3 +228,6 @@ ja:
   conversations:
     show:
       failure: 'アクセス権限がありません'
+  messages:
+    destroy:
+      success: 'メッセージを削除しました'

@@ -30,7 +30,12 @@
                     <%= link_to message.user.name, user_path(message.user), class: "message-user-link" %>
                   </span>
                   <p class="bg-light px-4 py-2 mb-1"><%= message.body %></p>
-                  <div class="exchangepost-time text-end"><%= l message.created_at, format: :long %></div>
+                  <div class="exchangepost-time text-end">
+                    <%= l message.created_at, format: :long %>
+                    <%= link_to message, method: :delete, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" } do %>
+                      <i class="fas fa-trash-alt me-1"></i>削除
+                    <% end %>
+                  </div>
                 </div>
               <% else %>
                 <div class="col-md-11">
