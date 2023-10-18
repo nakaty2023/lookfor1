@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  before_action :authenticate_user!, only: %i[index show create]
+  before_action :authenticate_user!
   before_action :correct_user, only: :show
   before_action :load_conversations, only: %i[index show]
   before_action :check_conversations, only: :index

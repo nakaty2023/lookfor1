@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Messages', type: :system, focus: true do
+RSpec.describe 'Messages', type: :system do
   let(:sender) { create(:user) }
   let(:recipient) { create(:user) }
   let!(:conversation) { create(:conversation, sender:, recipient:) }
