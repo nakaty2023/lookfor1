@@ -170,7 +170,10 @@ RSpec.describe User, type: :model do
   describe '関連する子モデルの削除' do
     let!(:shop) { create(:shop) }
     let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
     let(:exchangepost_attributes) { attributes_for(:exchangepost) }
+    let!(:conversation) { create(:conversation, sender_id: user.id, recipient_id: other_user.id) }
+    let!(:message) { create(:message, user:, conversation:) }
 
     context 'ユーザーが削除された場合' do
       it '紐づく店舗に関する投稿が削除される' do
@@ -187,6 +190,14 @@ RSpec.describe User, type: :model do
         exchangepost = user.exchangeposts.create!(exchangepost_attributes)
         user.comments.create!(content: 'テストコメント', exchangepost_id: exchangepost.id)
         expect { user.destroy }.to change { Comment.count }.by(-1)
+      end
+
+      it '紐づく会話が削除される' do
+        expect { user.destroy }.to change { Conversation.count }.by(-1)
+      end
+
+      it '紐づくDMが削除される' do
+        expect { user.destroy }.to change { Message.count }.by(-1)
       end
     end
   end

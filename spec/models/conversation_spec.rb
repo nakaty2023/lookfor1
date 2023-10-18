@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Conversation, type: :model, focus: true do
+RSpec.describe Conversation, type: :model do
   let!(:user) { create(:user) }
   let!(:other_user) { create(:user) }
 
@@ -31,6 +31,17 @@ RSpec.describe Conversation, type: :model, focus: true do
       let(:duplicate_conversation) { build(:conversation, sender_id: user.id, recipient_id: other_user.id) }
       it '無効な状態である' do
         expect(duplicate_conversation).to_not be_valid
+      end
+    end
+  end
+
+  describe '関連するモデルの削除' do
+    let!(:conversation) { create(:conversation, sender_id: user.id, recipient_id: other_user.id) }
+    let!(:messages) { create_list(:message, 3, user:, conversation:) }
+
+    context '会話を削除した場合' do
+      it '紐づくメッセージが削除される' do
+        expect { conversation.destroy }.to change(Message, :count).by(-3)
       end
     end
   end
