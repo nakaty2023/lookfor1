@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :conversation do
-    sender_id { 1 }
-    recipient_id { 1 }
+    sender_id { nil }
+    recipient_id { nil }
   end
 end
