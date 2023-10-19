@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Homes', type: :request do
-  describe 'GET /' do
-    it 'returns http success' do
+RSpec.describe 'Homes', type: :request, focus: true do
+  describe 'GET #home' do
+    it 'HTTPステータスコード200のレスポンスを返すこと' do
       get root_path
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
   end
 end
