@@ -25,6 +25,7 @@ jobs:
           --health-retries 5
     env:
       RAILS_ENV: test
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       DATABASE_URL: "postgres://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@localhost:5432/${{ secrets.DB_DATABASE }}"
 
     steps:
