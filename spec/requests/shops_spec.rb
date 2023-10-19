@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Shops', type: :request, focus: true do
+RSpec.describe 'Shops', type: :request do
   let!(:shop) { create(:shop) }
 
   describe 'GET #index' do
