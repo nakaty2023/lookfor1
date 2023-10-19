@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Comments', type: :request, focus: true do
+RSpec.describe 'Comments', type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   let(:exchangepost) { create(:exchangepost, user:) }
