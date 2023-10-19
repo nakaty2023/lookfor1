@@ -1,0 +1,12 @@
+<% provide(:title, 'DM') %>
+<div class="p-4">
+  <h1 class="fs-3 fw-bold">DM</h1>
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <%= render partial: "shared/conversations", locals: { recipient: @recipient, users: @users } %>
+    </div>
+    <div class="col-md-8">
+      <%= render partial: "shared/messages", locals: { recipient: @recipient, messages: @messages, message: @message, conversation: @conversation } %>
+    </div>
+  </div>
+</div>

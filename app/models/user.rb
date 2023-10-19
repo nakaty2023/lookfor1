@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :shopposts, dependent: :destroy
   has_many :exchangeposts, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :conversations, foreign_key: :sender_id, dependent: :destroy, inverse_of: :sender
   has_one_attached :image do |attachable|
     attachable.variant :display, resize_to_limit: [400, 400]
   end

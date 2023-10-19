@@ -15,6 +15,8 @@ ja:
         images: 画像
       comment:
         content: コメント内容
+      message:
+        body: メッセージ内容
     enums:
       user:
         gender:
@@ -27,6 +29,7 @@ ja:
       user: ユーザー
       exchangepost: グッズ交換に関する投稿
       comment: コメント
+      message: メッセージ
     errors:
       messages:
         record_invalid: "バリデーションに失敗しました: %{errors}"
@@ -225,4 +228,9 @@ ja:
       success: '投稿が完了しました'
     destroy:
       success: 'コメントを削除しました'
-
+  conversations:
+    show:
+      failure: 'アクセス権限がありません'
+  messages:
+    destroy:
+      success: 'メッセージを削除しました'

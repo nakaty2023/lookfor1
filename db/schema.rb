@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_11_132347) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_16_123543) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_132347) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sender_id", "recipient_id"], name: "index_conversations_on_sender_id_and_recipient_id", unique: true
+  end
+
   create_table "exchangeposts", force: :cascade do |t|
     t.string "give_item_name"
     t.text "give_item_description"
@@ -72,6 +80,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_132347) do
     t.text "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "user_id", null: false
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "shopitems", force: :cascade do |t|
@@ -118,6 +136,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_132347) do
   add_foreign_key "comments", "exchangeposts"
   add_foreign_key "comments", "users"
   add_foreign_key "exchangeposts", "users"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "shopposts", "shops"
   add_foreign_key "shopposts", "users"
 end

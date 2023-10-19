@@ -26,4 +26,8 @@ Rails.application.routes.draw do
     end
   end
   resources :comments, only: %i[create destroy]
+  resources :messages, only: :destroy
+  resources :conversations, only: %i[index create show] do
+    resources :messages, only: %i[create]
+  end
 end
