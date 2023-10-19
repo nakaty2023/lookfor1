@@ -43,7 +43,7 @@ class ShopsController < ApplicationController
 
   def destroy
     Shop.find(params[:id]).destroy
-    redirect_to shops_url, status: :see_other
+    redirect_to root_path, status: :see_other
   end
 
   private

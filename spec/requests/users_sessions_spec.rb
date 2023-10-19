@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'UsersSessions', type: :request, focus: true do
+RSpec.describe 'UsersSessions', type: :request do
   let!(:user) { create(:user) }
   let!(:guest_user) { create(:user, name: 'ゲスト', email: 'guest@example.com') }
 
