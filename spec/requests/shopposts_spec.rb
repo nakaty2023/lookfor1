@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Shopposts', type: :request, focus: true do
+RSpec.describe 'Shopposts', type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   let(:shop) { create(:shop) }
