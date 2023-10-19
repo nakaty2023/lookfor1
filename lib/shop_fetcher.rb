@@ -3,7 +3,7 @@ def shop_fetcher
   require 'nokogiri'
 
   options = Selenium::WebDriver::Chrome::Options.new
-  # options.add_argument('--headless')
+  options.add_argument('--headless')
   options.add_argument('--disable-gpu')
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
@@ -30,9 +30,9 @@ def shop_fetcher
   product_element = Selenium::WebDriver::Support::Select.new(product_dropdown)
   product_options = product_element.options.reject { |option| option.attribute('value') == 'null' }
 
-  selected_product_options = product_options[0...8] + product_options[9..]
+  # selected_product_options = product_options[0...8] + product_options[9..]
 
-  selected_product_options.each do |product_option|
+  product_options.each do |product_option|
     product_name = product_option.text.sub('一番くじ ', '')
     @product = Item.find_by(name: product_name)
     product_option.click
@@ -54,8 +54,8 @@ def shop_fetcher
       city_dropdown = driver.find_element(:id, 'city_select')
       city_element = Selenium::WebDriver::Support::Select.new(city_dropdown)
       city_options = city_element.options.reject { |option| option.attribute('value') == 'null' }
-
-      selected_city_options = city_options[0..1]
+      selected_city_options = city_options[4..]
+      next if selected_city_options.blank?
 
       selected_city_options.each do |city_option|
         city_option.click
@@ -69,14 +69,22 @@ def shop_fetcher
         sleep 1 # ページの読み込みを待つための適当な待機時間
         page_source = driver.page_source
         document = Nokogiri::HTML(page_source)
-        ul_element = document.at_css('ul#shop_list_update')
+        ul_element = document.at_css('ul#shop_list_update_inner')
 
         # 店舗名と店舗住所を取得
         ul_element.css('li').each do |li|
-          name = li.at_css('h5').text
-          address = li.at_css('p.address').text.strip
-          google_map_link = driver.find_element(:css, 'a.arrow[href*="https://www.google.com/maps/search/?api=1&query="]').attribute('href')
-          match = /query=([\d\.-]+),([\d\.-]+)/.match(google_map_link)
+          h5_element = li.at_css('a > h5')
+          next unless h5_element
+
+          name = h5_element.text
+          address = li.at_css('a > p.address').text.strip
+          google_map_link_element = li.at_css('ul.linkCol a.linkCircle[href*="https://www.google.com/maps/dir/?api=1&destination="]')
+          next unless google_map_link_element
+
+          google_map_link = google_map_link_element['href']
+          match = /destination=([\d\.-]+),([\d\.-]+)/.match(google_map_link)
+          next unless match
+
           lat = match[1]
           lon = match[2]
           unless @shops.any? { |shop| shop[:name] == name && shop[:address] == address }
@@ -88,7 +96,7 @@ def shop_fetcher
     end
   end
 
-  current_shopitems = Shopitem.all.map { |si| { shop_id: si.shop_id, item_id: si.item_id } }
+  # current_shopitems = Shopitem.all.map { |si| { shop_id: si.shop_id, item_id: si.item_id } }
 
   # スクレイピングで取得した情報を保存
   @shops.each do |shop|
@@ -103,9 +111,9 @@ def shop_fetcher
   end
 
   # 公式サイトに掲載されなくなった情報は削除
-  Shop.where.not(name: @shops.pluck(:name)).delete_all
+  # Shop.where.not(name: @shops.pluck(:name)).delete_all
 
-  old_shopitems = current_shopitems - @scraped_shopitems
+  # old_shopitems = current_shopitems - @scraped_shopitems
 
   # 削除対象データ等を取得できているかどうか確認
   # puts @shops
@@ -113,10 +121,10 @@ def shop_fetcher
   # puts current_shopitems
   # puts @scraped_shopitems
 
-  old_shopitems.each do |old_shopitem|
-    shopitem = Shopitem.find_by(shop_id: old_shopitem[:shop_id], item_id: old_shopitem[:item_id])
-    shopitem&.destroy
-  end
+  # old_shopitems.each do |old_shopitem|
+  #   shopitem = Shopitem.find_by(shop_id: old_shopitem[:shop_id], item_id: old_shopitem[:item_id])
+  #   shopitem&.destroy
+  # end
 
   # ブラウザを閉じる
   driver.quit

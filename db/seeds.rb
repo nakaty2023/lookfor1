@@ -1,16 +1,16 @@
-# # Users
-# names = ["テスト太郎", "テスト花子", "きっしー", "ガースー"]
-# names.each_with_index do |name, i|
-#   user = User.new(
-#     name: "#{name}",
-#     email: "test#{i + 1}@example.com",
-#     password: "password"
-#   )
-#   user.image.attach(io: File.open("./db/seeds/images/avatar_sample#{i}.png"), filename: 'avatar_sample#{i}.png')
-#   user.save!
-# end
+# Users
+names = ["テスト太郎", "テスト花子", "きっしー", "ガースー"]
+names.each_with_index do |name, i|
+  user = User.new(
+    name: "#{name}",
+    email: "test#{i + 1}@example.com",
+    password: "password"
+  )
+  user.image.attach(io: File.open("./db/seeds/images/avatar_sample#{i}.png"), filename: 'avatar_sample#{i}.png')
+  user.save!
+end
 
-# Exchangeposts, Comments, Conversation, Message
+# Exchangeposts, Comments, Conversations, Messages
 exchangeposts_file = File.read(Rails.root.join('db', 'seeds', 'exchangeposts.json'))
 exchangeposts_array = JSON.parse(exchangeposts_file)
 exchangeposts_array.each_with_index do |exchangepost, i|
@@ -41,14 +41,14 @@ exchangeposts_array.each_with_index do |exchangepost, i|
     user_id: user2.id)
 end
 
-# # Shopposts
-# 50.times do
-#   user = User.order(Arel.sql('RANDOM()')).first
-#   shop = Shop.order(Arel.sql('RANDOM()')).first
-#   shoppost = user.shopposts.build(
-#     content: "○月○日の○時頃に店舗へ行きましたが、鬼滅の刃 ～襲撃～の▲賞、*賞の在庫ありました！在庫状況のポスターは下記の通りでした！",
-#     shop_id: shop.id,
-#   )
-#   shoppost.images.attach(io: File.open("./db/seeds/images/sample_image.jpeg"), filename: 'sample_image.jpeg')
-#   shoppost.save
-# end
+# Shopposts
+50.times do
+  user = User.order(Arel.sql('RANDOM()')).first
+  shop = Shop.order(Arel.sql('RANDOM()')).first
+  shoppost = user.shopposts.build(
+    content: "○月○日の○時頃に店舗へ行きましたが、鬼滅の刃 ～襲撃～の▲賞、*賞の在庫ありました！在庫状況のポスターは下記の通りでした！",
+    shop_id: shop.id,
+  )
+  shoppost.images.attach(io: File.open("./db/seeds/images/sample_image.jpeg"), filename: 'sample_image.jpeg')
+  shoppost.save
+end
