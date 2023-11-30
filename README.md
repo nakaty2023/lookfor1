@@ -25,7 +25,7 @@
 ## 自己紹介
 アプリを作成したnakaty と申します。\
 ご覧いただきありがとうございます。\
-私は、大学卒業後約10年間、地方公務員として勤務してきましたが、ExelVBAで作成した業務効率化ツールを同僚に喜んでいただけたことをきっかけに、プログラミングへの興味が深まり、専門性を高めてプログラミングを仕事にしたいと思うようになりました。\
+私は、大学卒業後公務員として勤務してきましたが、ExelVBAで業務効率化ツールを作成したことをきっかけに、プログラミングへの興味が深まり、専門性を高めてエンジニアになりたいと考えるようになりました。\
 私がWebエンジニアになりたい理由は、専門的で高度なスキルにより様々な社会課題を解決できることに魅力を感じるからです。\
 Webエンジニアとして働き、スキルを磨くことで、多くの人々に喜んでいただけるようなWebサービスの開発に携わりたいと考えております。
 
@@ -78,7 +78,7 @@ Webエンジニアとして働き、スキルを磨くことで、多くの人�
 2023/10/19までの総学習時間　952時間
 
 ## 連絡先
-Email: nakaty.webdev@gmail.com
+twitter: [@nakatyyyyyyy](https://twitter.com/nakatyyyyyyy)
 
 <br>
 
@@ -100,10 +100,12 @@ Email: nakaty.webdev@gmail.com
 
 ## URL
 Look for 1\
-https://lookfor1.site
+https://lookfor1.site　※変更前(現在はアクセスできません)\
+https://lookfor1.onrender.com　※変更後
 
 ## インフラ構成図
 ![インフラ構成図](app/assets/images/infrastructure_diagram.png)
+<font color="Red">※ 2023/11/30にデプロイ先をAWSからRenderへ変更しました。</font>
 
 ## ER図
 ![ER図](app/assets/images/erd.png)
