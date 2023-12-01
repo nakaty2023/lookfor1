@@ -104,7 +104,7 @@ https://lookfor1.site　※変更前(現在はアクセスできません)\
 https://lookfor1.onrender.com　※変更後
 
 ## インフラ構成図
-![インフラ構成図](app/assets/images/infrastructure_diagram.png)
+![インフラ構成図](app/assets/images/infrastructure_diagram.png)\
 <font color="Red">※ 2023/11/30にデプロイ先をAWSからRenderへ変更しました。</font>
 
 ## ER図
