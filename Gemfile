@@ -26,6 +26,7 @@ gem 'active_storage_validations'
 gem 'pg'
 gem "faker"
 gem 'ransack'
+gem 'rufus-scheduler'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

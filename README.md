@@ -25,7 +25,7 @@
 ## 自己紹介
 アプリを作成したnakaty と申します。\
 ご覧いただきありがとうございます。\
-私は、大学卒業後公務員として勤務してきましたが、ExelVBAで業務効率化ツールを作成したことをきっかけに、プログラミングへの興味が深まり、専門性を高めてエンジニアになりたいと考えるようになりました。\
+私は、大学卒業後非IT業界で働いてきましたが、ExelVBAで業務効率化ツールを作成したことをきっかけに、プログラミングへの興味が深まり、専門性を高めてエンジニアになりたいと考えるようになりました。\
 私がWebエンジニアになりたい理由は、専門的で高度なスキルにより様々な社会課題を解決できることに魅力を感じるからです。\
 Webエンジニアとして働き、スキルを磨くことで、多くの人々に喜んでいただけるようなWebサービスの開発に携わりたいと考えております。
 
@@ -98,14 +98,14 @@ twitter: [@nakatyyyyyyy](https://twitter.com/nakatyyyyyyy)
 - くじで当たったグッズを譲りたい人とそのグッズが欲しい人の現地交換を実現するためのマッチング機能
 
 
-## URL
+## URL（※）
 Look for 1\
-https://lookfor1.site　※変更前(現在はアクセスできません)\
-https://lookfor1.onrender.com　※変更後
+https://lookfor1.onrender.com<br>
+※ 2023/11/30に変更しました。
 
-## インフラ構成図
-![インフラ構成図](app/assets/images/infrastructure_diagram.png)\
-<font color="Red">※ 2023/11/30にデプロイ先をAWSからRenderへ変更しました。</font>
+## インフラ構成図（※）
+![インフラ構成図](app/assets/images/infrastructure_diagram.png)<br>
+### <font color="Red">**※ 2023/11/30にデプロイ先をAWSからRender.comへ変更しました。**</font>
 
 ## ER図
 ![ER図](app/assets/images/erd.png)
